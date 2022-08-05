@@ -1,0 +1,3 @@
+SNOWMAN
+
+A hangman-alternative.
