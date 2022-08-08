@@ -7,7 +7,8 @@ import java.io.Reader;
 
 public class Main {
 
-  private static String response;
+  private static String gameMode;
+  private static int numberOfGuesses;
 
   public static void main(String[] args) throws IOException {
 
@@ -17,10 +18,9 @@ public class Main {
     System.out.println("1 - Single-Player");
     System.out.println("2 - Multi-Player");
 
-    response = reader.readLine();
-    System.out.println(response);
-    if (response.equals("1")) {
-      singlePlayer();
+    gameMode = reader.readLine();
+    if (gameMode.equals("1")) {
+      singlePlayer(reader);
     } else {
       multiPlayer();
     }
@@ -30,8 +30,13 @@ public class Main {
     System.out.println("You are wrong, lol.");
   }
 
-  static void singlePlayer() {
+  static void singlePlayer(BufferedReader reader) throws IOException{
     System.out.println("You are right.");
+    System.out.println("Hey there! How many guesses do you want?");
+    numberOfGuesses = Integer.parseInt(reader.readLine());
+    System.out.println(numberOfGuesses);
+
   }
+
 
 }
