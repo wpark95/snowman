@@ -32,8 +32,6 @@ public class Main {
 
   static void singlePlayer() {
     System.out.println("You are right.");
-
   }
-
 
 }
