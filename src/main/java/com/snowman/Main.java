@@ -9,7 +9,18 @@ public class Main {
 
   private static String gameMode;
   private static int numberOfGuesses;
-  private static int length;
+  private static int userLength;
+
+
+  static String[] fourLength = {"wait", "wake", "walk", "want", "nice"};
+  static String[] sixLengths = {"abroad", "accept", "access", "across", "acting"};
+  static String[] fiveLengths = {"about", "above", "again", "jelly", "lower"};
+  static String[] sevenLengths = {"Ability", "absence", "academy", "account", "accused"};
+  static String[][] wordList = {new String[]{}, new String[]{}, new String[]{}, new String[]{},
+      fourLength, fiveLengths, sixLengths, sevenLengths};
+
+
+  private static String secretWord;
 
   public static void main(String[] args) throws IOException {
 
@@ -37,10 +48,27 @@ public class Main {
     numberOfGuesses = Integer.parseInt(reader.readLine());
     System.out.println(numberOfGuesses);
     System.out.println("How long do you want the word to be?");
-    length = Integer.parseInt(reader.readLine());
-    System.out.println(length);
+    userLength = Integer.parseInt(reader.readLine());
+    // TODO Range of word length (4-14)
+
+    System.out.println(userLength);
+    for (String word : wordList[userLength]) {
+      int randomIndex = (int) ((Math.random() * ((wordList[userLength].length - 1) - 0)) + 0);
+      secretWord = wordList[userLength][randomIndex];
+      System.out.println(secretWord);
+      break;
+
+
+    }
+
 
   }
 
 
 }
+
+
+
+
+
+
