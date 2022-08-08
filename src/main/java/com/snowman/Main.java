@@ -26,7 +26,6 @@ public class Main {
     }
   }
 
-
   static void multiPlayer() {
     System.out.println("You are wrong, lol.");
   }
