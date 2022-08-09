@@ -1,8 +1,8 @@
 package com.snowman.singleplayer;
 
-import com.snowman.PrintSnowman;
+import com.snowman.SnowmanPrinter;
+import com.snowman.WordList;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SinglePlayer {
@@ -12,25 +12,6 @@ public class SinglePlayer {
   private static String wordPlaceholder = "";
   private static String secretWord;
 
-  // Snowman Builds
-//  private static String hatTop = " *       /*\\  *    *";
-//  private static String hatLow = "   *   _/ _ \\_ *   * ";
-//  private static String neutralFace = " *   *  (‘< ‘ ) *      *";
-//  private static String sadFace = " *   *  (T< T ) *      *";
-//  private static String happyFace = " *   *  (^< ^ ) *      *";
-//  private static String bodyTop = "   * \\–(  :   )–/   *";
-//  private static String bodyLow = " *    (__: __)  *    *";
-
-  static String[] fourLength = {"wait", "wake", "walk", "want", "nice"};
-  static String[] fiveLengths = {"about", "above", "again", "jelly", "lower"};
-  static String[] sixLengths = {"abroad", "accept", "access", "across", "acting"};
-  static String[] sevenLengths = {"Ability", "absence", "academy", "account", "accused"};
-  static String[][] wordList = {new String[]{}, new String[]{}, new String[]{}, new String[]{},
-      fourLength, fiveLengths, sixLengths, sevenLengths};
-
-  public SinglePlayer() throws FileNotFoundException {
-  }
-
   public static void singlePlayerMain(BufferedReader reader) throws IOException {
     getUserGamePreference(reader);
     // TODO: This is for functionality demonstration.
@@ -39,16 +20,14 @@ public class SinglePlayer {
       wordPlaceholder = wordPlaceholder + ("_");
     }
 
-    String[] targetArray = wordList[wordLength];
-    int randomIndex = (int) ((Math.random() * ((targetArray.length - 1))));
-    secretWord = targetArray[randomIndex];
+    secretWord = WordList.wordChoice(wordLength);
 
     System.out.println(secretWord); // TODO: Delete after testing
 
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
       printGameState();
-      PrintSnowman.sadSnowman(); // TODO: Extract printSnowman as a class later, so that it
+      SnowmanPrinter.printSnowman(sadPoint, remainingGuess); // TODO: Extract printSnowman as a class later, so that it
       //  can be used in the multiplayer mode.
       System.out.println("Any guess?");
       wordGuess(reader);
@@ -89,39 +68,25 @@ public class SinglePlayer {
     }
   }
 
-  private static void printSnowman(int sadPoint) {
-    if (remainingGuess > sadPoint) { // Prints out happy snowman
-      PrintSnowman.happySnowman();
-    } else if (remainingGuess == sadPoint) {
-      PrintSnowman.neutralSnowman();
-    }else if(remainingGuess == sadPoint){
-    } else if (remainingGuess < sadPoint - 2) {
-      System.out.println("Good job. You killed the snowman.");
-      PrintSnowman.sadSnowman();
-    } else if (remainingGuess < sadPoint - 1) {
-      PrintSnowman.noBodySnowman();
-    } else {
-//      DrawSnowman.printNoLowBodySnowman();
-      PrintSnowman.lowSnowSnowman();
-    }
-  }
-
   private static void printGameState() {
     System.out.println("Your guess so far: " + wordPlaceholder);
     System.out.println("Remaining guesses: " + remainingGuess);
   }
 
   private static void getUserGamePreference(BufferedReader reader) throws IOException {
-    System.out.println("Hey there! How many guesses would you like? This can be 1 - 30 (inclusive).");
+    System.out.println(
+        "Hey there! How many guesses would you like? This can be 1 - 30 (inclusive).");
     int userGuessNumInput = Integer.parseInt(reader.readLine().trim());
     if (userGuessNumInput > 30 || userGuessNumInput < 1) {
-      throw new IllegalArgumentException("Number of guesses must be a number between 1 and 30 (inclusive).");
+      throw new IllegalArgumentException(
+          "Number of guesses must be a number between 1 and 30 (inclusive).");
     }
     remainingGuess = userGuessNumInput;
-    System.out.println("How long do you want the word to be?");
+    System.out.println("How long do you want the word to be? This can be 4 - 15 (inclusive).");
     int userWordLengthInput = Integer.parseInt(reader.readLine().trim());
     if (userWordLengthInput > 15 || userWordLengthInput < 4) {
-      throw new IllegalArgumentException("Word length must be a number between 4 and 15 (inclusive).");
+      throw new IllegalArgumentException(
+          "Word length must be a number between 4 and 15 (inclusive).");
     }
     wordLength = userWordLengthInput;
   }
