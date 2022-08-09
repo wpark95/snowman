@@ -31,8 +31,6 @@ public class Main {
     System.out.println("You are wrong, lol.");
   }
 
-
-
 }
 
 

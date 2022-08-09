@@ -39,6 +39,19 @@ public class SinglePlayer {
       printGameState();
       printSnowman(sadPoint); // TODO: Extract printSnowman as a class later, so that it
                               //  can be used in the multiplayer mode.
+      System.out.println("Any guess?");
+      String userGuess = reader.readLine().trim();
+      if (userGuess.length() == 1) { // If the user is guessing for a letter
+        if (secretWord.contains(userGuess)) { // And if the user correctly guessed a letter in the secret word
+          int charIndex = secretWord.indexOf(userGuess);
+          System.out.println(charIndex); // TODO: Delete this.
+        } else {
+          System.out.println("Damn bro I'm melting!");
+          remainingGuess--;
+        }
+       } else { // If the user is guessing for the secret word
+        boolean result = userGuess.equals(secretWord);
+      }
     }
   }
 
@@ -61,9 +74,9 @@ public class SinglePlayer {
   }
 
   private static void printGameState() {
-    wordPlaceholder = new StringBuilder("Your guess so far:");
+    wordPlaceholder = new StringBuilder("Your guess so far: ");
     for (int i = 0; i < wordLength; i++) {
-      wordPlaceholder.append(" _");
+      wordPlaceholder.append("_");
     }
     System.out.println("Remaining guesses: " + remainingGuess);
     System.out.println(wordPlaceholder);
