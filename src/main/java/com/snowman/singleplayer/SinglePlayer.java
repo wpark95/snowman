@@ -2,9 +2,6 @@ package com.snowman.singleplayer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Locale;
 
 public class SinglePlayer {
 
@@ -47,7 +44,7 @@ public class SinglePlayer {
     while (remainingGuess > 0) {
       printGameState();
       printSnowman(sadPoint); // TODO: Extract printSnowman as a class later, so that it
-                              //  can be used in the multiplayer mode.
+      //  can be used in the multiplayer mode.
       System.out.println("Any guess?");
       wordGuess(reader);
     }
@@ -111,13 +108,18 @@ public class SinglePlayer {
   }
 
   private static void getUserGamePreference(BufferedReader reader) throws IOException {
-    System.out.println("Hey there! How many guesses do you want?");
-    // TODO Range of number of guesses should be within [1 - 30].
-    remainingGuess = Integer.parseInt(reader.readLine());
-    System.out.println(remainingGuess);
-    // TODO Range of word length should be [4-14] using a .csv file.
+    System.out.println("Hey there! How many guesses would you like? This can be 1 - 30 (inclusive).");
+    int userGuessNumInput = Integer.parseInt(reader.readLine().trim());
+    if (userGuessNumInput > 30 || userGuessNumInput < 1) {
+      throw new IllegalArgumentException("Number of guesses must be a number between 1 and 30 (inclusive).");
+    }
+    remainingGuess = userGuessNumInput;
     System.out.println("How long do you want the word to be?");
-    wordLength = Integer.parseInt(reader.readLine());
+    int userWordLengthInput = Integer.parseInt(reader.readLine().trim());
+    if (userWordLengthInput > 15 || userWordLengthInput < 4) {
+      throw new IllegalArgumentException("Word length must be a number between 4 and 15 (inclusive).");
+    }
+    wordLength = userWordLengthInput;
   }
 
   private static void printHappySnowman() {
