@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class SinglePlayer {
 
   private static int remainingGuess;
   private static int wordLength;
-  private static StringBuilder wordPlaceholder;
-  private static boolean isFirstTry = true;
+  private static String wordPlaceholder = "";
+  private static String secretWord;
 
   // Snowman Builds
   private static String hatTop = " *       /*\\  *    *";
@@ -32,51 +33,57 @@ public class SinglePlayer {
     getUserGamePreference(reader);
     // TODO: This is for functionality demonstration.
     //  Please modify the following for loop to accommodate the use .csv files.
+    for (int i = 0; i < wordLength; i++) {
+      wordPlaceholder = wordPlaceholder + ("_");
+    }
 
     String[] targetArray = wordList[wordLength];
     int randomIndex = (int) ((Math.random() * ((targetArray.length - 1))));
-    String secretWord = targetArray[randomIndex];
-    System.out.println(secretWord);
+    secretWord = targetArray[randomIndex];
+
+    System.out.println(secretWord); // TODO: Delete after testing
+
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
-      printGameState(isFirstTry);
+      printGameState();
       printSnowman(sadPoint); // TODO: Extract printSnowman as a class later, so that it
                               //  can be used in the multiplayer mode.
       System.out.println("Any guess?");
-      String userGuess = reader.readLine().trim();
-      if (userGuess.length() == 1) { // If the user is guessing for a letter
+      wordGuess(reader);
+    }
+  }
 
-        if (secretWord.contains(userGuess)) { // And if the user correctly guessed a letter in the secret word
+  private static void wordGuess(BufferedReader reader) throws IOException {
+    // TODO: We should not let user enter a letter or word they already tried. So maybe create a map to keep track of those?
+    String userGuess = reader.readLine().trim();
 
-          char[] charArr = secretWord.toCharArray(); // Secret word, but just as an array
-          char userChar = userGuess.charAt(0); // The user's guess (letter)
-          String test = String.valueOf(wordPlaceholder); // Initially "____"
-          char[] testCharArr = test.toCharArray(); // {'_', '_', ...}
+    if (userGuess.length() >= 2) { // If the user's guess a word
 
-          for (int i = 0; i < charArr.length; i++) {
-            if (charArr[i] == userChar) {
-              testCharArr[i] = userChar;      // "want"    "a"
-//              System.out.println(i);          // "_a__"
-//              System.out.println(Arrays.toString(charArr));
-//              System.out.println(Arrays.toString(testCharArr));
-//              System.out.print(secretWord.charAt(i));
-//            } else {
-//              System.out.println("_");
-            }
+      if (userGuess.equals(secretWord)) {
+        // The user guessed the word correctly, so delegate this action to win/lose message generator
+      } else {
+        System.out.println("Wrong guess. Come on, I'm melting!");
+        remainingGuess--;
+      }
+
+    } else { // If the user's guess is a letter
+
+      if (secretWord.contains(userGuess)) {
+        char userLetter = userGuess.toLowerCase().charAt(0);
+        for (int i = 0; i < secretWord.length(); i++) {
+          char currChar = secretWord.charAt(i);
+          if (currChar == userLetter) {
+            char[] chars = wordPlaceholder.toCharArray();
+            chars[i] = userLetter;
+            wordPlaceholder = String.valueOf(chars);
           }
-
-          wordPlaceholder = new StringBuilder(testCharArr.toString());
-
-        } else {
-          System.out.println("Damn bro I'm melting!");
-          remainingGuess--;
         }
 
-       } else { // If the user is guessing for the secret word (i.e., userGuess has more than 1 letter)
+      } else {
+        System.out.println("Wrong guess. Come on, I'm melting!");
         remainingGuess--;
-        boolean result = userGuess.equals(secretWord);
-        System.out.println(result);
       }
+
     }
   }
 
@@ -98,17 +105,9 @@ public class SinglePlayer {
     }
   }
 
-  private static void printGameState(boolean isFirstTry) {
-    System.out.println("Your guess so far: ");
-    wordPlaceholder = new StringBuilder("");
-    if (isFirstTry) {
-      for (int i = 0; i < wordLength; i++) {
-        wordPlaceholder.append("_");
-      }
-      isFirstTry = false;
-    }
+  private static void printGameState() {
+    System.out.println("Your guess so far: " + wordPlaceholder);
     System.out.println("Remaining guesses: " + remainingGuess);
-    System.out.println(wordPlaceholder);
   }
 
   private static void getUserGamePreference(BufferedReader reader) throws IOException {
