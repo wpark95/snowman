@@ -1,8 +1,6 @@
 package com.snowman.singleplayer;
 
-import static com.snowman.DrawSnowman.printHappySnowman;
-
-import com.snowman.DrawSnowman;
+import com.snowman.PrintSnowman;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -46,7 +44,7 @@ public class SinglePlayer {
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
       printGameState();
-      printSnowman(sadPoint); // TODO: Extract printSnowman as a class later, so that it
+      PrintSnowman.sadSnowman(); // TODO: Extract printSnowman as a class later, so that it
       //  can be used in the multiplayer mode.
       System.out.println("Any guess?");
       wordGuess(reader);
@@ -57,7 +55,7 @@ public class SinglePlayer {
     // TODO: We should not let user enter a letter or word they already tried. So maybe create a map to keep track of those?
     String userGuess = reader.readLine().trim();
 
-    if (userGuess.length() >= 2) { // If the user's guess a word
+    if (userGuess.length() >= 2) {  // If the user's guess a word
 
       if (userGuess.equals(secretWord)) {
         // The user guessed the word correctly, so delegate this action to win/lose message generator
@@ -89,17 +87,18 @@ public class SinglePlayer {
 
   private static void printSnowman(int sadPoint) {
     if (remainingGuess > sadPoint) { // Prints out happy snowman
-      DrawSnowman.printHappySnowman();
+      PrintSnowman.happySnowman();
     } else if (remainingGuess == sadPoint) {
-      DrawSnowman.printNeutralSnowman();
+      PrintSnowman.neutralSnowman();
+    }else if(remainingGuess == sadPoint){
     } else if (remainingGuess < sadPoint - 2) {
       System.out.println("Good job. You killed the snowman.");
-      DrawSnowman.printHat();
+      PrintSnowman.sadSnowman();
     } else if (remainingGuess < sadPoint - 1) {
-      DrawSnowman.printNoBodySnowman();
+      PrintSnowman.noBodySnowman();
     } else {
 //      DrawSnowman.printNoLowBodySnowman();
-      DrawSnowman.printHat();
+      PrintSnowman.lowSnowSnowman();
     }
   }
 
