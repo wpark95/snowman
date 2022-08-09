@@ -1,5 +1,8 @@
 package com.snowman.singleplayer;
 
+import static com.snowman.DrawSnowman.printHappySnowman;
+
+import com.snowman.DrawSnowman;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -11,13 +14,13 @@ public class SinglePlayer {
   private static String secretWord;
 
   // Snowman Builds
-  private static String hatTop = " *       /*\\  *    *";
-  private static String hatLow = "   *   _/ _ \\_ *   * ";
-  private static String neutralFace = " *   *  (‘< ‘ ) *      *";
-  private static String sadFace = " *   *  (T< T ) *      *";
-  private static String happyFace = " *   *  (^< ^ ) *      *";
-  private static String bodyTop = "   * \\–(  :   )–/   *";
-  private static String bodyLow = " *    (__: __)  *    *";
+//  private static String hatTop = " *       /*\\  *    *";
+//  private static String hatLow = "   *   _/ _ \\_ *   * ";
+//  private static String neutralFace = " *   *  (‘< ‘ ) *      *";
+//  private static String sadFace = " *   *  (T< T ) *      *";
+//  private static String happyFace = " *   *  (^< ^ ) *      *";
+//  private static String bodyTop = "   * \\–(  :   )–/   *";
+//  private static String bodyLow = " *    (__: __)  *    *";
 
   static String[] fourLength = {"wait", "wake", "walk", "want", "nice"};
   static String[] fiveLengths = {"about", "above", "again", "jelly", "lower"};
@@ -59,7 +62,7 @@ public class SinglePlayer {
       if (userGuess.equals(secretWord)) {
         // The user guessed the word correctly, so delegate this action to win/lose message generator
       } else {
-        System.out.println("Wrong guess. Come on, I'm melting!");
+        System.out.println("Wrong guess. Come on, I'm going to melt!");
         remainingGuess--;
       }
 
@@ -86,19 +89,17 @@ public class SinglePlayer {
 
   private static void printSnowman(int sadPoint) {
     if (remainingGuess > sadPoint) { // Prints out happy snowman
-      printHappySnowman();
+      DrawSnowman.printHappySnowman();
     } else if (remainingGuess == sadPoint) {
-      printSadSnowman();
+      DrawSnowman.printNeutralSnowman();
     } else if (remainingGuess < sadPoint - 2) {
       System.out.println("Good job. You killed the snowman.");
-      printHat();
+      DrawSnowman.printHat();
     } else if (remainingGuess < sadPoint - 1) {
-      printHat();
-      System.out.println(sadFace);
+      DrawSnowman.printNoBodySnowman();
     } else {
-      printHat();
-      System.out.println(sadFace);
-      System.out.println(bodyTop);
+//      DrawSnowman.printNoLowBodySnowman();
+      DrawSnowman.printHat();
     }
   }
 
@@ -121,24 +122,6 @@ public class SinglePlayer {
     }
     wordLength = userWordLengthInput;
   }
-
-  private static void printHappySnowman() {
-    printHat();
-    System.out.println(happyFace);
-    System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
-    System.out.println(bodyLow);
-  }
-
-  private static void printSadSnowman() {
-    printHat();
-    System.out.println(sadFace);
-    System.out.println(bodyTop);
-    System.out.println(bodyLow);
-  }
-
-  private static void printHat() {
-    System.out.println(hatTop); // TODO: Combine hatTop and hatLow.
-    System.out.println(hatLow);
-  }
-
 }
+
+
