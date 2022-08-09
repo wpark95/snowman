@@ -19,7 +19,7 @@ public class WordList {
         randomIndex = (int) ((Math.random() * ((words.length - 1))));
       }
     }
-    return words[randomIndex];
+    return words[randomIndex].toLowerCase();
 
   }
 

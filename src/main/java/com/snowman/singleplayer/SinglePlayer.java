@@ -14,8 +14,6 @@ public class SinglePlayer {
 
   public static void singlePlayerMain(BufferedReader reader) throws IOException {
     getUserGamePreference(reader);
-    // TODO: This is for functionality demonstration.
-    //  Please modify the following for loop to accommodate the use .csv files.
     for (int i = 0; i < wordLength; i++) {
       wordPlaceholder = wordPlaceholder + ("_");
     }
@@ -27,30 +25,29 @@ public class SinglePlayer {
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
       printGameState();
-      SnowmanPrinter.printSnowman(sadPoint, remainingGuess); // TODO: Extract printSnowman as a class later, so that it
-      //  can be used in the multiplayer mode.
+      SnowmanPrinter.printSnowman(sadPoint, remainingGuess);
       System.out.println("Any guess?");
       wordGuess(reader);
     }
   }
 
   private static void wordGuess(BufferedReader reader) throws IOException {
-    // TODO: We should not let user enter a letter or word they already tried. So maybe create a map to keep track of those?
-    String userGuess = reader.readLine().trim();
+    // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
+    String userGuess = reader.readLine().toLowerCase().trim();
 
-    if (userGuess.length() >= 2) {  // If the user's guess a word
+    if (userGuess.length() >= 2) {
 
       if (userGuess.equals(secretWord)) {
-        // The user guessed the word correctly, so delegate this action to win/lose message generator
+        // TODO The user guessed the word correctly, so delegate this action to win/lose message generator
       } else {
         System.out.println("Wrong guess. Come on, I'm going to melt!");
         remainingGuess--;
       }
 
-    } else { // If the user's guess is a letter
+    } else {
 
       if (secretWord.contains(userGuess)) {
-        char userLetter = userGuess.toLowerCase().charAt(0);
+        char userLetter = userGuess.charAt(0);
         for (int i = 0; i < secretWord.length(); i++) {
           char currChar = secretWord.charAt(i);
           if (currChar == userLetter) {
