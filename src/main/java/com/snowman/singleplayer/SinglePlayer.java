@@ -1,9 +1,10 @@
 package com.snowman.singleplayer;
 
 import com.snowman.SnowmanPrinter;
-import com.snowman.WordList;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SinglePlayer {
 
@@ -11,17 +12,15 @@ public class SinglePlayer {
   private static int wordLength;
   private static String wordPlaceholder = "";
   private static String secretWord;
+  private static Set<String> triedWords = new HashSet<>();
 
   public static void singlePlayerMain(BufferedReader reader) throws IOException {
     getUserGamePreference(reader);
     for (int i = 0; i < wordLength; i++) {
       wordPlaceholder = wordPlaceholder + ("_");
     }
-
     secretWord = WordList.wordChoice(wordLength);
-
     System.out.println(secretWord); // TODO: Delete after testing
-
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
       printGameState();
@@ -35,37 +34,41 @@ public class SinglePlayer {
     // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
     String userGuess = reader.readLine().toLowerCase().trim();
 
-    if (userGuess.length() >= 2) {
-
-      if (userGuess.equals(secretWord)) {
-        // TODO The user guessed the word correctly, so delegate this action to win/lose message generator
-      } else {
-        System.out.println("Wrong guess. Come on, I'm going to melt!");
-        remainingGuess--;
-      }
-
-    } else {
-
-      if (secretWord.contains(userGuess)) {
-        char userLetter = userGuess.charAt(0);
-        for (int i = 0; i < secretWord.length(); i++) {
-          char currChar = secretWord.charAt(i);
-          if (currChar == userLetter) {
-            char[] chars = wordPlaceholder.toCharArray();
-            chars[i] = userLetter;
-            wordPlaceholder = String.valueOf(chars);
-          }
+    if (!triedWords.contains(
+        userGuess)) { // If the user input (called userGuess) is a letter or word that we've never seen before,
+      triedWords.add(userGuess); // Then we add it to triedWords (the HashSet)
+      if (userGuess.length()
+          >= 2) { // And then do all the computation to see if it's the secret word or a part of the secret word.
+        if (userGuess.equals(secretWord)) {
+          // TODO The user guessed the word correctly, so delegate this action to win/lose message generator
+        } else {
+          System.out.println("Wrong guess. Come on, I'm going to melt!");
+          remainingGuess--;
         }
-
       } else {
-        System.out.println("Wrong guess. Come on, I'm melting!");
-        remainingGuess--;
+        if (secretWord.contains(userGuess)) {
+          char userLetter = userGuess.charAt(0);
+          for (int i = 0; i < secretWord.length(); i++) {
+            char currChar = secretWord.charAt(i);
+            if (currChar == userLetter) {
+              char[] chars = wordPlaceholder.toCharArray();
+              chars[i] = userLetter;
+              wordPlaceholder = String.valueOf(chars);
+            }
+          }
+        } else {
+          System.out.println("Wrong guess. Come on, I'm melting!");
+          remainingGuess--;
+        }
       }
-
+    } else {
+      System.out.println(
+          String.format("Try again. You've already tried %s before", userGuess));
     }
   }
 
   private static void printGameState() {
+    System.out.println("Already guessed: " + triedWords.toString());
     System.out.println("Your guess so far: " + wordPlaceholder);
     System.out.println("Remaining guesses: " + remainingGuess);
   }
@@ -87,6 +90,5 @@ public class SinglePlayer {
     }
     wordLength = userWordLengthInput;
   }
+
 }
-
-
