@@ -2,6 +2,7 @@ package com.snowman.singleplayer;
 
 import com.snowman.PrintSnowman;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SinglePlayer {
@@ -26,6 +27,9 @@ public class SinglePlayer {
   static String[] sevenLengths = {"Ability", "absence", "academy", "account", "accused"};
   static String[][] wordList = {new String[]{}, new String[]{}, new String[]{}, new String[]{},
       fourLength, fiveLengths, sixLengths, sevenLengths};
+
+  public SinglePlayer() throws FileNotFoundException {
+  }
 
   public static void singlePlayerMain(BufferedReader reader) throws IOException {
     getUserGamePreference(reader);
