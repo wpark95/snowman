@@ -2,12 +2,15 @@ package com.snowman.singleplayer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class SinglePlayer {
 
   private static int remainingGuess;
   private static int wordLength;
   private static StringBuilder wordPlaceholder;
+  private static boolean isFirstTry = true;
 
   // Snowman Builds
   private static String hatTop = " *       /*\\  *    *";
@@ -36,21 +39,43 @@ public class SinglePlayer {
     System.out.println(secretWord);
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
-      printGameState();
+      printGameState(isFirstTry);
       printSnowman(sadPoint); // TODO: Extract printSnowman as a class later, so that it
                               //  can be used in the multiplayer mode.
       System.out.println("Any guess?");
       String userGuess = reader.readLine().trim();
       if (userGuess.length() == 1) { // If the user is guessing for a letter
+
         if (secretWord.contains(userGuess)) { // And if the user correctly guessed a letter in the secret word
-          int charIndex = secretWord.indexOf(userGuess);
-          System.out.println(charIndex); // TODO: Delete this.
+
+          char[] charArr = secretWord.toCharArray(); // Secret word, but just as an array
+          char userChar = userGuess.charAt(0); // The user's guess (letter)
+          String test = String.valueOf(wordPlaceholder); // Initially "____"
+          char[] testCharArr = test.toCharArray(); // {'_', '_', ...}
+
+          for (int i = 0; i < charArr.length; i++) {
+            if (charArr[i] == userChar) {
+              testCharArr[i] = userChar;      // "want"    "a"
+//              System.out.println(i);          // "_a__"
+//              System.out.println(Arrays.toString(charArr));
+//              System.out.println(Arrays.toString(testCharArr));
+//              System.out.print(secretWord.charAt(i));
+//            } else {
+//              System.out.println("_");
+            }
+          }
+
+          wordPlaceholder = new StringBuilder(testCharArr.toString());
+
         } else {
           System.out.println("Damn bro I'm melting!");
           remainingGuess--;
         }
-       } else { // If the user is guessing for the secret word
+
+       } else { // If the user is guessing for the secret word (i.e., userGuess has more than 1 letter)
+        remainingGuess--;
         boolean result = userGuess.equals(secretWord);
+        System.out.println(result);
       }
     }
   }
@@ -73,10 +98,14 @@ public class SinglePlayer {
     }
   }
 
-  private static void printGameState() {
-    wordPlaceholder = new StringBuilder("Your guess so far: ");
-    for (int i = 0; i < wordLength; i++) {
-      wordPlaceholder.append("_");
+  private static void printGameState(boolean isFirstTry) {
+    System.out.println("Your guess so far: ");
+    wordPlaceholder = new StringBuilder("");
+    if (isFirstTry) {
+      for (int i = 0; i < wordLength; i++) {
+        wordPlaceholder.append("_");
+      }
+      isFirstTry = false;
     }
     System.out.println("Remaining guesses: " + remainingGuess);
     System.out.println(wordPlaceholder);
