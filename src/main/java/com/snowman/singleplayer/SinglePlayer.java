@@ -1,8 +1,10 @@
 package com.snowman.singleplayer;
 
+import com.snowman.Main;
 import com.snowman.SnowmanPrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,13 +60,19 @@ public class SinglePlayer {
               char[] chars = wordPlaceholder.toCharArray();
               chars[i] = userLetter;
               wordPlaceholder = String.valueOf(chars);
+              if(wordPlaceholder.equals(secretWord)) {
+                SnowmanPrinter.youWinSnowman();
+                Main.main(null);
+
+              }
             }
           }
         } else {
-          System.out.println("Wrong guess. Come on, I'm melting!");
-          remainingGuess--;
+            System.out.println("Wrong guess. Come on, I'm melting!");
+            remainingGuess--;
         }
       }
+
     } else {
       System.out.println(
           String.format("Try again. You've already tried %s before", userGuess));
@@ -82,7 +90,8 @@ public class SinglePlayer {
         "Hey there! How many guesses would you like? This can be 1 - 30 (inclusive).");
     String userInput = reader.readLine().trim();
     if (userInput.length() == 0) {
-      remainingGuess = MIN_GUESS + (int) (Math.random() * (MAX_GUESS - MIN_GUESS) + 1); //TODO verify this equation, just in case ;)
+      remainingGuess = MIN_GUESS + (int) (Math.random() * (MAX_GUESS - MIN_GUESS)
+          + 1); //TODO verify this equation, just in case ;)
     } else {
       int userGuessNumInput = Integer.parseInt(userInput);
       if (userGuessNumInput > MAX_GUESS || userGuessNumInput < MIN_GUESS) {
