@@ -28,7 +28,7 @@ public class Main {
   }
 
   static void multiPlayer() {
-    System.out.println("You are wrong, lol.");
+    System.out.println("Sorry, the multiplayer feature is not ready yet.");
   }
 
 }

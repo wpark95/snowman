@@ -16,7 +16,6 @@ public class SnowmanPrinter {
   private static final String bodyTop1 = "     \\–(  :   )–/    ";
   private static final String bodyLow1 = "      (__: __)        ";
 
-
   public static void printSnowman(int sadPoint, int remainingGuess) {
     if (remainingGuess > sadPoint) { // Prints out happy snowman
       SnowmanPrinter.happySnowman();
@@ -32,7 +31,6 @@ public class SnowmanPrinter {
       SnowmanPrinter.lowSnowSnowman();
     }
   }
-
 
   private static void happySnowman() {
     hat();
