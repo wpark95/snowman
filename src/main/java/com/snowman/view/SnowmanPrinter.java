@@ -2,6 +2,7 @@ package com.snowman.view;
 
 import com.snowman.Main;
 import java.io.IOException;
+import java.util.Random;
 
 public class SnowmanPrinter {
 
@@ -19,7 +20,10 @@ public class SnowmanPrinter {
   private static final String bodyTop1 = "     \\–(  :   )–/    ";
   private static final String bodyLow1 = "      (__: __)        ";
 
-  public static void printSnowman(int sadPoint, int remainingGuess) throws IOException {
+  public static void printSnowman(int remainingGuess, int wordLength) throws IOException {
+    Random rand = new Random(); // TODO: Hide these two lines in SnowmanPrinter
+    int sadPoint = 1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
+
     if (remainingGuess > sadPoint) { // Prints out happy snowman
       SnowmanPrinter.happySnowman();
     } else if (remainingGuess == sadPoint) {

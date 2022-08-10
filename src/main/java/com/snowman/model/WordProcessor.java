@@ -3,7 +3,6 @@ package com.snowman.model;
 import com.snowman.Main;
 import com.snowman.view.SnowmanPrinter;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -47,22 +46,21 @@ public class WordProcessor {
     return sameLengthWords.get(rng.nextInt(sameLengthWords.size()));
   }
 
-  public static int wordGuess(BufferedReader reader, int remainingGuess, Set<String> triedWords,
+  public static boolean wordGuess(BufferedReader reader, Set<String> triedWords,
       String secretWord, String wordPlaceholder) throws IOException {
     // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
     String userGuess = reader.readLine().toLowerCase().trim();
-    int newRemainingGuess = remainingGuess;
+    boolean result = false;
 
     if (!triedWords.contains(userGuess)) {
       triedWords.add(userGuess);
-      if (userGuess.length() >= 2) {
+      if (userGuess.length() > 1) {
         if (userGuess.equals(secretWord)) { // TODO: extract these three lines into a method & reuse
           SnowmanPrinter.youWinSnowman();
           triedWords.clear();
           Main.main(null); // Winning case
         } else {
           System.out.println("Wrong word. Come on, I'm going to melt!");
-          newRemainingGuess--;
         }
       } else {
         if (secretWord.contains(userGuess)) {
@@ -70,6 +68,7 @@ public class WordProcessor {
           for (int i = 0; i < secretWord.length(); i++) {
             char currChar = secretWord.charAt(i);
             if (currChar == userLetter) {
+              result = true;
               char[] chars = wordPlaceholder.toCharArray();
               chars[i] = userLetter;
               wordPlaceholder = String.valueOf(chars);
@@ -82,14 +81,13 @@ public class WordProcessor {
           }
         } else {
           System.out.println("Wrong guess. Come on, I'm melting!");
-          newRemainingGuess--;
         }
       }
     } else {
       System.out.println(
           String.format("Try again. You've already tried %s before", userGuess));
     }
-    return newRemainingGuess;
+    return result;
   }
 
 }
