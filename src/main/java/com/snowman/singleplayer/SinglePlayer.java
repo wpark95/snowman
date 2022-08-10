@@ -4,8 +4,8 @@ import com.snowman.Main;
 import com.snowman.SnowmanPrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class SinglePlayer {
@@ -16,18 +16,17 @@ public class SinglePlayer {
   public static final int MIN_WORD_LENGTH = 4;
   private static int remainingGuess;
   private static int wordLength;
-  private static String wordPlaceholder = "";
+  private static String wordPlaceholder;
   private static String secretWord;
-  private static Set<String> triedWords = new HashSet<>();
+  private static final Set<String> triedWords = new HashSet<>();
 
   public static void singlePlayerMain(BufferedReader reader) throws IOException {
     getUserGamePreference(reader);
-    for (int i = 0; i < wordLength; i++) {
-      wordPlaceholder = wordPlaceholder + ("_");
-    }
+    wordPlaceholder = "_".repeat(wordLength);
     secretWord = WordList.wordChoice(wordLength);
     System.out.println(secretWord); // TODO: Delete after testing
-    int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
+    Random rand = new Random(); // TODO: Hide these two lines in SnowmanPrinter
+    int sadPoint = 1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess >= 0) {
       printGameState();
       SnowmanPrinter.printSnowman(sadPoint, remainingGuess);
@@ -40,16 +39,14 @@ public class SinglePlayer {
     // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
     String userGuess = reader.readLine().toLowerCase().trim();
 
-    if (!triedWords.contains(
-        userGuess)) { // If the user input (called userGuess) is a letter or word that we've never seen before,
-      triedWords.add(userGuess); // Then we add it to triedWords (the HashSet)
-      if (userGuess.length()
-          >= 2) { // And then do all the computation to see if it's the secret word or a part of the secret word.
-        if (userGuess.equals(secretWord)) {
+    if (!triedWords.contains(userGuess)) {
+      triedWords.add(userGuess);
+      if (userGuess.length() >= 2) {
+        if (userGuess.equals(secretWord)) { // TODO: extract these three lines into a method & reuse
           SnowmanPrinter.youWinSnowman();
           Main.main(null);
         } else {
-          System.out.println("Wrong guess. Come on, I'm melting!");
+          System.out.println("Wrong word. Come on, I'm going to melt!");
           remainingGuess--;
         }
       } else {
@@ -79,7 +76,7 @@ public class SinglePlayer {
   }
 
   private static void printGameState() {
-    System.out.println("Already guessed: " + triedWords.toString());
+    System.out.println("Already guessed: " + triedWords);
     System.out.println("Your guess so far: " + wordPlaceholder);
     System.out.println("Remaining guesses: " + remainingGuess);
   }
@@ -89,8 +86,7 @@ public class SinglePlayer {
         "Hey there! How many guesses would you like? This can be 1 - 30 (inclusive).");
     String userInput = reader.readLine().trim();
     if (userInput.length() == 0) {
-      remainingGuess = MIN_GUESS + (int) (Math.random() * (MAX_GUESS - MIN_GUESS)
-          + 1); //TODO verify this equation, just in case ;)
+      remainingGuess = MIN_GUESS + (int) (Math.random() * (MAX_GUESS - MIN_GUESS) + 1); //TODO verify this equation, just in case ;)
     } else {
       int userGuessNumInput = Integer.parseInt(userInput);
       if (userGuessNumInput > MAX_GUESS || userGuessNumInput < MIN_GUESS) {
