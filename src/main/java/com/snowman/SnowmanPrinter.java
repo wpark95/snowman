@@ -22,7 +22,6 @@ public class SnowmanPrinter {
       SnowmanPrinter.happySnowman();
     } else if (remainingGuess == sadPoint) {
       SnowmanPrinter.neutralSnowman();
-    } else if (remainingGuess == sadPoint) {
     } else if (remainingGuess < sadPoint - 2) {
       System.out.println("Good job. You killed the snowman.");
       SnowmanPrinter.sadSnowman();

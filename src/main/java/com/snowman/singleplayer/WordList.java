@@ -1,4 +1,4 @@
-package com.snowman;
+package com.snowman.singleplayer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
