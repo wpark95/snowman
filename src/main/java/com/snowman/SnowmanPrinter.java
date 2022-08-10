@@ -1,5 +1,7 @@
 package com.snowman;
 
+import java.io.IOException;
+
 public class SnowmanPrinter {
 
   private static final String hatTop = " *       /*\\  *    *";
@@ -16,15 +18,15 @@ public class SnowmanPrinter {
   private static final String bodyTop1 = "     \\–(  :   )–/    ";
   private static final String bodyLow1 = "      (__: __)        ";
 
-  public static void printSnowman(int sadPoint, int remainingGuess) {
+  public static void printSnowman(int sadPoint, int remainingGuess) throws IOException {
     if (remainingGuess > sadPoint) { // Prints out happy snowman
       SnowmanPrinter.happySnowman();
     } else if (remainingGuess == sadPoint) {
       SnowmanPrinter.neutralSnowman();
     } else if (remainingGuess == sadPoint) {
     } else if (remainingGuess < sadPoint - 2) {
-      System.out.println("Good job. You killed the snowman.");
-      SnowmanPrinter.sadSnowman();
+      SnowmanPrinter.youLoseSnowman();
+      Main.main(null);
     } else if (remainingGuess < sadPoint - 1) {
       SnowmanPrinter.noBodySnowman();
     } else {
@@ -103,6 +105,15 @@ public class SnowmanPrinter {
         + "░░╚██╔╝░░██║░░██║██║░░░██║  ░░████╔═████║░██║██║╚████║\n"
         + "░░░██║░░░╚█████╔╝╚██████╔╝  ░░╚██╔╝░╚██╔╝░██║██║░╚███║\n"
         + "░░░╚═╝░░░░╚════╝░░╚═════╝░  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝");
+  }
+  public static void youLoseSnowman() {
+    System.out.println("\n"
+        + "██╗░░░██╗░█████╗░██╗░░░██╗  ██╗░░░░░░█████╗░░██████╗███████╗\n"
+        + "╚██╗░██╔╝██╔══██╗██║░░░██║  ██║░░░░░██╔══██╗██╔════╝██╔════╝\n"
+        + "░╚████╔╝░██║░░██║██║░░░██║  ██║░░░░░██║░░██║╚█████╗░█████╗░░\n"
+        + "░░╚██╔╝░░██║░░██║██║░░░██║  ██║░░░░░██║░░██║░╚═══██╗██╔══╝░░\n"
+        + "░░░██║░░░╚█████╔╝╚██████╔╝  ███████╗╚█████╔╝██████╔╝███████╗\n"
+        + "░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚══════╝░╚════╝░╚═════╝░╚══════╝");
   }
 
 }

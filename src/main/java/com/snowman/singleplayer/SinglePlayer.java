@@ -28,7 +28,7 @@ public class SinglePlayer {
     secretWord = WordList.wordChoice(wordLength);
     System.out.println(secretWord); // TODO: Delete after testing
     int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
-    while (remainingGuess > 0) {
+    while (remainingGuess >= 0) {
       printGameState();
       SnowmanPrinter.printSnowman(sadPoint, remainingGuess);
       System.out.println("Any guess?");
@@ -49,7 +49,7 @@ public class SinglePlayer {
           SnowmanPrinter.youWinSnowman();
           Main.main(null);
         } else {
-          System.out.println("Wrong guess. Come on, I'm going to melt!");
+          System.out.println("Wrong guess. Come on, I'm melting!");
           remainingGuess--;
         }
       } else {
@@ -61,19 +61,17 @@ public class SinglePlayer {
               char[] chars = wordPlaceholder.toCharArray();
               chars[i] = userLetter;
               wordPlaceholder = String.valueOf(chars);
-              if(wordPlaceholder.equals(secretWord)) {
+              if (wordPlaceholder.equals(secretWord)) {
                 SnowmanPrinter.youWinSnowman();
                 Main.main(null);
-
               }
             }
           }
         } else {
-            System.out.println("Wrong guess. Come on, I'm melting!");
-            remainingGuess--;
+          System.out.println("Wrong guess. Come on, I'm melting!");
+          remainingGuess--;
         }
       }
-
     } else {
       System.out.println(
           String.format("Try again. You've already tried %s before", userGuess));
