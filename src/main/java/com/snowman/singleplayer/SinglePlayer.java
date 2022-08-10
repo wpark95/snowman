@@ -46,7 +46,8 @@ public class SinglePlayer {
       if (userGuess.length()
           >= 2) { // And then do all the computation to see if it's the secret word or a part of the secret word.
         if (userGuess.equals(secretWord)) {
-          // TODO The user guessed the word correctly, so delegate this action to win/lose message generator
+          SnowmanPrinter.youWinSnowman();
+          Main.main(null);
         } else {
           System.out.println("Wrong guess. Come on, I'm going to melt!");
           remainingGuess--;

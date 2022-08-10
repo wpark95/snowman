@@ -46,13 +46,13 @@ public class SnowmanPrinter {
     System.out.println(bodyLow);
   }
 
-  public static void sadSnowman() {
+  private static void sadSnowman() {
     noLowBodySnowman();
     System.out.println(bodyTop);
     System.out.println(bodyLow);
   }
 
-  public static void lowSnowSnowman() {
+  private static void lowSnowSnowman() {
     System.out.println(hatTop1);
     System.out.println(hatLow1);
     System.out.println(sadFace1);
@@ -60,7 +60,7 @@ public class SnowmanPrinter {
     System.out.println(bodyLow);
   }
 
-  public static void noSnowSnowman() {
+  private static void noSnowSnowman() {
     System.out.println(hatTop1);
     System.out.println(hatLow1);
     System.out.println(sadFace1);
@@ -68,27 +68,34 @@ public class SnowmanPrinter {
     System.out.println(bodyLow1);
   }
 
-  public static void noHandSnowman() {
+  private static void noHandSnowman() {
     noBodySnowman();
     System.out.println(noHandsBodyTop);
   }
 
-  public static void noLowBodySnowman() {
+  private static void noLowBodySnowman() {
     noBodySnowman();
     System.out.println(bodyTop);
   }
 
-  public static void noBodySnowman() {
+  private static void noBodySnowman() {
     hat();
     System.out.println(sadFace);
   }
 
-  public static void hat() {
+  private static void hat() {
     System.out.println(hatTop);
     System.out.println(hatLow);
   }
 
   public static void youWinSnowman() {
+    System.out.println("\n"
+        + "░█████╗░░█████╗░███╗░░██╗░██████╗░██████╗░░█████╗░████████╗██╗░░░██╗██╗░░░░░░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗\n"
+        + "██╔══██╗██╔══██╗████╗░██║██╔════╝░██╔══██╗██╔══██╗╚══██╔══╝██║░░░██║██║░░░░░██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝\n"
+        + "██║░░╚═╝██║░░██║██╔██╗██║██║░░██╗░██████╔╝███████║░░░██║░░░██║░░░██║██║░░░░░███████║░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░\n"
+        + "██║░░██╗██║░░██║██║╚████║██║░░╚██╗██╔══██╗██╔══██║░░░██║░░░██║░░░██║██║░░░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗\n"
+        + "╚█████╔╝╚█████╔╝██║░╚███║╚██████╔╝██║░░██║██║░░██║░░░██║░░░╚██████╔╝███████╗██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝\n"
+        + "░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░");
     System.out.println("\n"
         + "██╗░░░██╗░█████╗░██╗░░░██╗  ░██╗░░░░░░░██╗██╗███╗░░██╗\n"
         + "╚██╗░██╔╝██╔══██╗██║░░░██║  ░██║░░██╗░░██║██║████╗░██║\n"
