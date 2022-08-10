@@ -65,7 +65,6 @@ public class SinglePlayer {
         System.out.println("Wrong guess. Come on, I'm melting!");
         remainingGuess--;
       }
-
     }
   }
 
