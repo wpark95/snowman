@@ -15,9 +15,8 @@ public class Main {
     Reader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
     System.out.println("Hey there! What would you like to play?");
-    System.out.println("1 - Single-Player");
-    System.out.println("2 - Multi-Player");
-    System.out.print("<");
+    System.out.println("Enter 1 for Single-Player");
+    System.out.println("Enter 2 for Multi-Player");
 
     gameMode = reader.readLine();
     if (gameMode.equals("1")) {

@@ -24,10 +24,10 @@ public class SnowmanPrinter {
     } else if (remainingGuess == sadPoint) {
       SnowmanPrinter.neutralSnowman();
     } else if (remainingGuess == sadPoint) {
-    } else if (remainingGuess < sadPoint - 2) {
+    } else if (remainingGuess < sadPoint - 2) { // TODO: change these fixed number "2"
       SnowmanPrinter.youLoseSnowman();
       Main.main(null);
-    } else if (remainingGuess < sadPoint - 1) {
+    } else if (remainingGuess < sadPoint - 1) { // TODO: change these fixed number "1"
       SnowmanPrinter.noBodySnowman();
     } else {
       SnowmanPrinter.lowSnowSnowman();
@@ -106,6 +106,7 @@ public class SnowmanPrinter {
         + "░░░██║░░░╚█████╔╝╚██████╔╝  ░░╚██╔╝░╚██╔╝░██║██║░╚███║\n"
         + "░░░╚═╝░░░░╚════╝░░╚═════╝░  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝");
   }
+
   public static void youLoseSnowman() {
     System.out.println("\n"
         + "██╗░░░██╗░█████╗░██╗░░░██╗  ██╗░░░░░░█████╗░░██████╗███████╗\n"

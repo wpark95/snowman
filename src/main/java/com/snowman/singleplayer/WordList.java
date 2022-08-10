@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-
-
 public class WordList {
+
   public static final String WORD_LIST_FILE = "./src/main/resources/snowman-words-four-to-fifteen.csv";
 
   public static String wordChoice(int userLength) throws FileNotFoundException {
