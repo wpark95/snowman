@@ -4,7 +4,9 @@ import com.snowman.SnowmanPrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
+import javax.management.relation.RelationNotFoundException;
 
 public class SinglePlayer {
 
@@ -20,34 +22,45 @@ public class SinglePlayer {
 
   public static void singlePlayerMain(BufferedReader reader) throws IOException {
     getUserGamePreference(reader);
-    for (int i = 0; i < wordLength; i++) {
-      wordPlaceholder = wordPlaceholder + ("_");
-    }
+    wordPlaceholder = "_".repeat(wordLength);
     secretWord = WordList.wordChoice(wordLength);
     System.out.println(secretWord); // TODO: Delete after testing
-    int sadPoint = 3; // TODO: Make sad point more flexible, not a fixed number.
+    Random rand = new Random();
+    int sadPoint = 1 + rand.nextInt(wordLength/2); // TODO: Make sad point more flexible, not a fixed number.
     while (remainingGuess > 0) {
       printGameState();
       SnowmanPrinter.printSnowman(sadPoint, remainingGuess);
       System.out.println("Any guess?");
-      wordGuess(reader);
+      if (wordGuess(reader)) {
+      }
     }
   }
 
-  private static void wordGuess(BufferedReader reader) throws IOException {
-    // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
+  private static boolean wordGuess(BufferedReader reader) throws IOException {
+    // TODO: We should not let user enter a wrong letter or word they already tried.
+    //   So maybe create a map to keep track of those?
     String userGuess = reader.readLine().toLowerCase().trim();
+    int userGuessWordSize = userGuess.length();
+    while (userGuessWordSize != 1 || userGuessWordSize != secretWord.length()){
+      System.out.println("Error Input - Please Try Again.");
 
-    if (!triedWords.contains(
-        userGuess)) { // If the user input (called userGuess) is a letter or word that we've never seen before,
-      triedWords.add(userGuess); // Then we add it to triedWords (the HashSet)
-      if (userGuess.length()
-          >= 2) { // And then do all the computation to see if it's the secret word or a part of the secret word.
+    }
+
+    if (!triedWords.contains(userGuess)) {
+      // If the user input (called userGuess) is a letter or word that we've never seen before,
+      triedWords.add(userGuess);
+      // Then we add it to triedWords (the HashSet)
+      if (userGuess.length() > 1) {
+        // And then do all the computation to see if it's the secret word or a part of the secret word.
         if (userGuess.equals(secretWord)) {
+          System.out.println("You Won! Congrats!");
+          return true;
+
           // TODO The user guessed the word correctly, so delegate this action to win/lose message generator
         } else {
-          System.out.println("Wrong guess. Come on, I'm going to melt!");
+          System.out.println("Wrong guess. Come on, I'm melting!");
           remainingGuess--;
+
         }
       } else {
         if (secretWord.contains(userGuess)) {
@@ -58,6 +71,10 @@ public class SinglePlayer {
               char[] chars = wordPlaceholder.toCharArray();
               chars[i] = userLetter;
               wordPlaceholder = String.valueOf(chars);
+              if (wordPlaceholder.equals(secretWord)) {
+                System.out.println("You Win!");
+                return true;
+              }
             }
           }
         } else {
@@ -66,9 +83,9 @@ public class SinglePlayer {
         }
       }
     } else {
-      System.out.println(
-          String.format("Try again. You've already tried %s before", userGuess));
+      System.out.printf("Try again. You've already tried %s before", userGuess);
     }
+    return false;
   }
 
   private static void printGameState() {
@@ -80,9 +97,11 @@ public class SinglePlayer {
   private static void getUserGamePreference(BufferedReader reader) throws IOException {
     System.out.println(
         "Hey there! How many guesses would you like? This can be 1 - 30 (inclusive).");
+    System.out.print("<");
     String userInput = reader.readLine().trim();
     if (userInput.length() == 0) {
-      remainingGuess = MIN_GUESS + (int) (Math.random() * (MAX_GUESS - MIN_GUESS) + 1); //TODO verify this equation, just in case ;)
+      remainingGuess = MIN_GUESS + (int) (Math.random() * (MAX_GUESS - MIN_GUESS)
+          + 1); //TODO verify this equation, just in case ;)
     } else {
       int userGuessNumInput = Integer.parseInt(userInput);
       if (userGuessNumInput > MAX_GUESS || userGuessNumInput < MIN_GUESS) {
@@ -94,8 +113,8 @@ public class SinglePlayer {
     System.out.println("How long do you want the word to be? This can be 4 - 15 (inclusive).");
     String userInput2 = reader.readLine().trim();
     if (userInput2.length() == 0) {
-      wordLength = MIN_WORD_LENGTH + (int) (Math.random() * (MAX_WORD_LENGTH - MIN_WORD_LENGTH)
-          + 1);
+      wordLength =
+          MIN_WORD_LENGTH + (int) (Math.random() * (MAX_WORD_LENGTH - MIN_WORD_LENGTH) + 1);
     } else {
       int userWordLengthInput = Integer.parseInt(userInput2);
       if (userWordLengthInput > MAX_WORD_LENGTH || userWordLengthInput < MIN_WORD_LENGTH) {

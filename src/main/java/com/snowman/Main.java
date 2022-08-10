@@ -17,6 +17,7 @@ public class Main {
     System.out.println("Hey there! What would you like to play?");
     System.out.println("1 - Single-Player");
     System.out.println("2 - Multi-Player");
+    System.out.print("<");
 
     gameMode = reader.readLine();
     if (gameMode.equals("1")) {
