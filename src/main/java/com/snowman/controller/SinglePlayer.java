@@ -1,12 +1,10 @@
 package com.snowman.controller;
 
-import com.snowman.Main;
 import com.snowman.model.WordProcessor;
 import com.snowman.view.SnowmanPrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 public class SinglePlayer {
