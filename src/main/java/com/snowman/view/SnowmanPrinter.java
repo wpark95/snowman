@@ -22,21 +22,27 @@ public class SnowmanPrinter {
 
   public static void printSnowman(int remainingGuess, int wordLength) throws IOException {
     Random rand = new Random(); // TODO: Hide these two lines in SnowmanPrinter
-    int sadPoint = 1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
-
-    if (remainingGuess > sadPoint) { // Prints out happy snowman
-      SnowmanPrinter.happySnowman();
-    } else if (remainingGuess == sadPoint) {
-      SnowmanPrinter.neutralSnowman();
-    } else if (remainingGuess == sadPoint) {
-    } else if (remainingGuess < sadPoint - 2) { // TODO: change these fixed number "2"
-      SnowmanPrinter.youLoseSnowman();
-      Main.main(null);
-    } else if (remainingGuess < sadPoint - 1) { // TODO: change these fixed number "1"
-      SnowmanPrinter.noBodySnowman();
-    } else {
-      SnowmanPrinter.lowSnowSnowman();
+    int sadPoint =
+        1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
+    switch (remainingGuess) {
+      case 0:
+        SnowmanPrinter.youLoseSnowman();
+        Main.main(null);
+        break;
+      case 1:
+        SnowmanPrinter.noBodySnowman();
+        break;
+      case 2:
+        SnowmanPrinter.noLowBodySnowman();
+        break;
+      case 3:
+        SnowmanPrinter.neutralSnowman();
+        break;
+      default:
+        SnowmanPrinter.happySnowman();
+        break;
     }
+
   }
 
   private static void happySnowman() {
@@ -51,33 +57,6 @@ public class SnowmanPrinter {
     System.out.println(neutralFace);
     System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
     System.out.println(bodyLow);
-  }
-
-  private static void sadSnowman() {
-    noLowBodySnowman();
-    System.out.println(bodyTop);
-    System.out.println(bodyLow);
-  }
-
-  private static void lowSnowSnowman() {
-    System.out.println(hatTop1);
-    System.out.println(hatLow1);
-    System.out.println(sadFace1);
-    System.out.println(bodyTop);
-    System.out.println(bodyLow);
-  }
-
-  private static void noSnowSnowman() {
-    System.out.println(hatTop1);
-    System.out.println(hatLow1);
-    System.out.println(sadFace1);
-    System.out.println(bodyTop1);
-    System.out.println(bodyLow1);
-  }
-
-  private static void noHandSnowman() {
-    noBodySnowman();
-    System.out.println(noHandsBodyTop);
   }
 
   private static void noLowBodySnowman() {
@@ -103,8 +82,7 @@ public class SnowmanPrinter {
         + "██║░░██╗██║░░██║██║╚████║██║░░╚██╗██╔══██╗██╔══██║░░░██║░░░██║░░░██║██║░░░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗\n"
         + "╚█████╔╝╚█████╔╝██║░╚███║╚██████╔╝██║░░██║██║░░██║░░░██║░░░╚██████╔╝███████╗██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝\n"
         + "░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░");
-    System.out.println("\n"
-        + "██╗░░░██╗░█████╗░██╗░░░██╗  ░██╗░░░░░░░██╗██╗███╗░░██╗\n"
+    System.out.println("\n" + "██╗░░░██╗░█████╗░██╗░░░██╗  ░██╗░░░░░░░██╗██╗███╗░░██╗\n"
         + "╚██╗░██╔╝██╔══██╗██║░░░██║  ░██║░░██╗░░██║██║████╗░██║\n"
         + "░╚████╔╝░██║░░██║██║░░░██║  ░╚██╗████╗██╔╝██║██╔██╗██║\n"
         + "░░╚██╔╝░░██║░░██║██║░░░██║  ░░████╔═████║░██║██║╚████║\n"
@@ -113,8 +91,7 @@ public class SnowmanPrinter {
   }
 
   public static void youLoseSnowman() {
-    System.out.println("\n"
-        + "██╗░░░██╗░█████╗░██╗░░░██╗  ██╗░░░░░░█████╗░░██████╗███████╗\n"
+    System.out.println("\n" + "██╗░░░██╗░█████╗░██╗░░░██╗  ██╗░░░░░░█████╗░░██████╗███████╗\n"
         + "╚██╗░██╔╝██╔══██╗██║░░░██║  ██║░░░░░██╔══██╗██╔════╝██╔════╝\n"
         + "░╚████╔╝░██║░░██║██║░░░██║  ██║░░░░░██║░░██║╚█████╗░█████╗░░\n"
         + "░░╚██╔╝░░██║░░██║██║░░░██║  ██║░░░░░██║░░██║░╚═══██╗██╔══╝░░\n"

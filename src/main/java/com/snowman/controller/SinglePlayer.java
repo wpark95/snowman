@@ -26,11 +26,17 @@ public class SinglePlayer {
     wordPlaceholder = "_".repeat(wordLength);
     secretWord = words.wordChoice(wordLength);
     System.out.println(secretWord); // TODO: Delete after testing
-    while (remainingGuess > 0) {
+    while (remainingGuess >= 0) {
       printGameState();
       SnowmanPrinter.printSnowman(remainingGuess, wordLength);
       System.out.println("Any guess?");
-      boolean wordGuessResult = WordProcessor.wordGuess(reader, triedWords, secretWord, wordPlaceholder);
+      String userGuess = reader.readLine().toLowerCase().trim();
+      boolean wordGuessResult = WordProcessor.wordGuess(userGuess, triedWords, secretWord, wordPlaceholder);
+      if (!wordGuessResult) {
+        remainingGuess--;
+      } else {
+        wordPlaceholder = WordProcessor.changeWordPlaceholder(userGuess, secretWord, wordPlaceholder);
+      }
 
     }
   }

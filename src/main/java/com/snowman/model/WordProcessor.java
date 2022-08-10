@@ -2,7 +2,6 @@ package com.snowman.model;
 
 import com.snowman.Main;
 import com.snowman.view.SnowmanPrinter;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -27,13 +26,11 @@ public class WordProcessor {
     rng = new Random();
 
     try {
-      Files
-          .lines(Paths.get(getClass().getClassLoader().getResource(WORD_LIST_FILE).toURI()))
-          .flatMap(LINE_SPLITTER::splitAsStream)
-          .forEach((word) -> {
+      Files.lines(Paths.get(getClass().getClassLoader().getResource(WORD_LIST_FILE).toURI()))
+          .flatMap(LINE_SPLITTER::splitAsStream).forEach((word) -> {
             List<String> sameLengthWords = words.computeIfAbsent(word.length(),
                 (length) -> new ArrayList<>());
-            sameLengthWords.add(word);
+            sameLengthWords.add(word.toLowerCase());
             words.putIfAbsent(word.length(), sameLengthWords);
           });
     } catch (IOException | URISyntaxException e) {
@@ -46,10 +43,9 @@ public class WordProcessor {
     return sameLengthWords.get(rng.nextInt(sameLengthWords.size()));
   }
 
-  public static boolean wordGuess(BufferedReader reader, Set<String> triedWords,
-      String secretWord, String wordPlaceholder) throws IOException {
+  public static boolean wordGuess(String userGuess, Set<String> triedWords, String secretWord,
+      String wordPlaceholder) throws IOException {
     // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
-    String userGuess = reader.readLine().toLowerCase().trim();
     boolean result = false;
 
     if (!triedWords.contains(userGuess)) {
@@ -64,28 +60,37 @@ public class WordProcessor {
         }
       } else {
         if (secretWord.contains(userGuess)) {
-          char userLetter = userGuess.charAt(0);
-          for (int i = 0; i < secretWord.length(); i++) {
-            char currChar = secretWord.charAt(i);
-            if (currChar == userLetter) {
-              result = true;
-              char[] chars = wordPlaceholder.toCharArray();
-              chars[i] = userLetter;
-              wordPlaceholder = String.valueOf(chars);
-              if (wordPlaceholder.equals(secretWord)) {
-                SnowmanPrinter.youWinSnowman();
-                triedWords.clear();
-                Main.main(null);
-              }
-            }
+          if (wordPlaceholder.equals(secretWord)) {
+            SnowmanPrinter.youWinSnowman();
+            triedWords.clear();
+            Main.main(null);
+          } else {
+            result = true;
           }
         } else {
           System.out.println("Wrong guess. Come on, I'm melting!");
         }
       }
     } else {
-      System.out.println(
-          String.format("Try again. You've already tried %s before", userGuess));
+      result = true;
+      System.out.println(String.format("Try again. You've already tried %s before", userGuess));
+
+    }
+    return result;
+  }
+
+  public static String changeWordPlaceholder(String userGuess, String secretWord,
+      String wordPlaceholder) throws IOException {
+    String result = wordPlaceholder;
+    char userLetter = userGuess.charAt(0);
+    for (int i = 0; i < secretWord.length(); i++) {
+      char currChar = secretWord.charAt(i);
+      if (currChar == userLetter) {
+        char[] chars = result.toCharArray();
+        chars[i] = userLetter;
+        result = String.valueOf(chars);
+
+      }
     }
     return result;
   }
