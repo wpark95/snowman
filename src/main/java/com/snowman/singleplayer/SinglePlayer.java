@@ -110,5 +110,4 @@ public class SinglePlayer {
       wordLength = userWordLengthInput;
     }
   }
-
 }
