@@ -1,5 +1,6 @@
-package com.snowman;
+package com.snowman.view;
 
+import com.snowman.Main;
 import java.io.IOException;
 
 public class SnowmanPrinter {
