@@ -1,11 +1,10 @@
 package com.snowman;
 
 import com.snowman.model.WordProcessor;
-import com.snowman.singleplayer.SinglePlayer;
+import com.snowman.controller.SinglePlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ResourceBundle;
 
 public class Main {
 
@@ -29,7 +28,6 @@ public class Main {
       multiPlayer();
     }
   }
-
   static void multiPlayer() {
     System.out.println("Sorry, the multiplayer feature is not ready yet.");
   }

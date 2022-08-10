@@ -1,4 +1,4 @@
-package com.snowman.singleplayer;
+package com.snowman.controller;
 
 import com.snowman.Main;
 import com.snowman.model.WordProcessor;
@@ -26,16 +26,20 @@ public class SinglePlayer {
     wordPlaceholder = "_".repeat(wordLength);
     secretWord = words.wordChoice(wordLength);
     System.out.println(secretWord); // TODO: Delete after testing
-    Random rand = new Random(); // TODO: Hide these two lines in SnowmanPrinter
-    int sadPoint = 1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
-    while (remainingGuess > 0) {
+    while (remainingGuess >= 0) {
       printGameState();
-      SnowmanPrinter.printSnowman(sadPoint, remainingGuess);
+      SnowmanPrinter.printSnowman(remainingGuess, wordLength);
       System.out.println("Any guess?");
-      remainingGuess = WordProcessor.wordGuess(reader, remainingGuess, triedWords, secretWord, wordPlaceholder);
+      String userGuess = reader.readLine().toLowerCase().trim();
+      boolean wordGuessResult = WordProcessor.wordGuess(userGuess, triedWords, secretWord, wordPlaceholder);
+      if (!wordGuessResult) {
+        remainingGuess--;
+      } else {
+        wordPlaceholder = WordProcessor.changeWordPlaceholder(userGuess, secretWord, wordPlaceholder);
+      }
+
     }
   }
-
 
   private static void printGameState() {
     System.out.println("Already guessed: " + triedWords);
