@@ -1,7 +1,8 @@
 package com.snowman.singleplayer;
 
 import com.snowman.Main;
-import com.snowman.SnowmanPrinter;
+import com.snowman.model.WordProcessor;
+import com.snowman.view.SnowmanPrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashSet;
@@ -20,60 +21,21 @@ public class SinglePlayer {
   private static String secretWord;
   private static final Set<String> triedWords = new HashSet<>();
 
-  public static void singlePlayerMain(BufferedReader reader) throws IOException {
+  public void singlePlayerController(BufferedReader reader, WordProcessor words) throws IOException {
     getUserGamePreference(reader);
     wordPlaceholder = "_".repeat(wordLength);
-    secretWord = WordList.wordChoice(wordLength);
+    secretWord = words.wordChoice(wordLength);
     System.out.println(secretWord); // TODO: Delete after testing
     Random rand = new Random(); // TODO: Hide these two lines in SnowmanPrinter
     int sadPoint = 1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
-    while (remainingGuess >= 0) {
+    while (remainingGuess > 0) {
       printGameState();
       SnowmanPrinter.printSnowman(sadPoint, remainingGuess);
       System.out.println("Any guess?");
-      wordGuess(reader);
+      remainingGuess = WordProcessor.wordGuess(reader, remainingGuess, triedWords, secretWord, wordPlaceholder);
     }
   }
 
-  private static void wordGuess(BufferedReader reader) throws IOException {
-    // TODO: We should not let user enter a wrong letter or word they already tried. So maybe create a map to keep track of those?
-    String userGuess = reader.readLine().toLowerCase().trim();
-
-    if (!triedWords.contains(userGuess)) {
-      triedWords.add(userGuess);
-      if (userGuess.length() >= 2) {
-        if (userGuess.equals(secretWord)) { // TODO: extract these three lines into a method & reuse
-          SnowmanPrinter.youWinSnowman();
-          Main.main(null);
-        } else {
-          System.out.println("Wrong word. Come on, I'm going to melt!");
-          remainingGuess--;
-        }
-      } else {
-        if (secretWord.contains(userGuess)) {
-          char userLetter = userGuess.charAt(0);
-          for (int i = 0; i < secretWord.length(); i++) {
-            char currChar = secretWord.charAt(i);
-            if (currChar == userLetter) {
-              char[] chars = wordPlaceholder.toCharArray();
-              chars[i] = userLetter;
-              wordPlaceholder = String.valueOf(chars);
-              if (wordPlaceholder.equals(secretWord)) {
-                SnowmanPrinter.youWinSnowman();
-                Main.main(null);
-              }
-            }
-          }
-        } else {
-          System.out.println("Wrong guess. Come on, I'm melting!");
-          remainingGuess--;
-        }
-      }
-    } else {
-      System.out.println(
-          String.format("Try again. You've already tried %s before", userGuess));
-    }
-  }
 
   private static void printGameState() {
     System.out.println("Already guessed: " + triedWords);
