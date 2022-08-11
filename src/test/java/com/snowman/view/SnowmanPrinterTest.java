@@ -29,32 +29,31 @@ class SnowmanPrinterTest {
 
   public static Stream<Arguments> remainingGuessSupplier() {
     return Stream.of(Arguments.of(
-        1, HAT_TOP + System.lineSeparator()
-            + HAT_LOW + System.lineSeparator()
-            + SAD_FACE + System.lineSeparator(),
-        2, HAT_TOP + System.lineSeparator()
-            + HAT_LOW + System.lineSeparator()
-            + BODY_TOP + System.lineSeparator(),
-        3, HAT_TOP + System.lineSeparator()
-            + HAT_LOW + System.lineSeparator()
-            + NEUTRAL_FACE + System.lineSeparator()
-            + BODY_TOP + System.lineSeparator()
-            + BODY_LOW + System.lineSeparator(),
-        4, HAT_TOP + System.lineSeparator()
-            + HAT_LOW + System.lineSeparator()
-            + HAPPY_FACE + System.lineSeparator()
-            + BODY_TOP + System.lineSeparator()
-            + BODY_LOW + System.lineSeparator(),
-        -4, HAT_TOP + System.lineSeparator()
-            + HAT_LOW + System.lineSeparator()
-            + HAPPY_FACE + System.lineSeparator()
-            + BODY_TOP + System.lineSeparator()
-            + BODY_LOW + System.lineSeparator())
-
+        0, "Sorry! You loose.",
+        1, HAT_TOP + "\r\n"
+            + HAT_LOW + "\r\n"
+            + SAD_FACE + "\r\n",
+        2, HAT_TOP + "\r\n"
+            + HAT_LOW + "\r\n"
+            + BODY_TOP + "\r\n",
+        3, HAT_TOP + "\r\n"
+            + HAT_LOW + "\r\n"
+            + NEUTRAL_FACE + "\r\n"
+            + BODY_TOP + "\r\n"
+            + BODY_LOW + "\r\n",
+        4, HAT_TOP + "\r\n"
+            + HAT_LOW + "\r\n"
+            + HAPPY_FACE + "\r\n"
+            + BODY_TOP + "\r\n"
+            + BODY_LOW + "\r\n",
+        -4, HAT_TOP + "\r\n"
+            + HAT_LOW + "\r\n"
+            + HAPPY_FACE + "\r\n"
+            + BODY_TOP + "\r\n"
+            + BODY_LOW + "\r\n")
     );
 
   }
-
 
   @ParameterizedTest
   @MethodSource("remainingGuessSupplier")
@@ -65,15 +64,27 @@ class SnowmanPrinterTest {
     String actualPrompt = outputStream.toString();
     Assertions.assertEquals(expectedPrompt, actualPrompt);
 
-
   }
 
   @Test
   void shouldPrintWinSnowman() {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outputStream));
     SnowmanPrinter.youWinSnowman();
+    String expectedPrompt = "Congratulations! You Win." + "\r\n";
+    String actualPrompt = outputStream.toString();
+    Assertions.assertEquals(expectedPrompt, actualPrompt);
   }
 
   @Test
   void shouldPrintLoseSnowman() {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outputStream));
+    SnowmanPrinter.youLoseSnowman();
+    String expectedPrompt = "Sorry! You loose." + "\r\n";
+    String actualPrompt = outputStream.toString();
+    Assertions.assertEquals(expectedPrompt, actualPrompt);
+
+
   }
 }

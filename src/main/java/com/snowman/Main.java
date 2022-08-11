@@ -2,7 +2,6 @@ package com.snowman;
 
 import com.snowman.controller.SinglePlayer;
 import com.snowman.model.WordProcessor;
-import com.snowman.view.PromptMessagePrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,18 +29,16 @@ public class Main {
   }
 
   private static void promptGameMode(BufferedReader reader) throws IOException {
-    PromptMessagePrinter.promptGameMode();
+    System.out.println("Hey there! What would you like to play?");
+    System.out.println("Enter 1 for Single-Player");
+    System.out.println("Enter 2 for Multi-Player");
     gameMode = reader.readLine();
 
-//    System.out.println("Hey there! What would you like to play?");
-//    System.out.println("Enter 1 for Single-Player");
-//    System.out.println("Enter 2 for Multi-Player");
   }
 
   static void multiPlayer() {
-    PromptMessagePrinter.promptMultiplayer();
 
-//    System.out.println("Sorry, the multiplayer feature is not ready yet.");
+    System.out.println("Sorry, the multiplayer feature is not ready yet.");
   }
 
 }
