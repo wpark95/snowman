@@ -8,25 +8,18 @@ import java.util.Set;
 public class MessagePrinter {
 
   private static final String hatTop = "  *      /*\\  *    *";
-
   private static final String hatLow = "    *  _/ _ \\_ *   * ";
-
   private static final String neutralFace = " *   * ('< ' ) *      *";
-
   private static final String sadFace = " *   * (T< T ) *      *";
-
   private static final String happyFace = " *   * (^< ^ ) *      *";
-
   private static final String bodyTop = "   * \\–(  :   )–/   *";
-
   private static final String bodyLow = "   *   (__: __)  *    *";
 
-  public static void printSnowman(int remainingGuess) throws IOException {
+  public static void printSnowman(int remainingGuess, String secretWord) {
 
     switch (remainingGuess) {
       case 0:
-        MessagePrinter.printLoseMessage();
-        Main.main(null);
+        MessagePrinter.printLoseMessage(secretWord);
         break;
       case 1:
         MessagePrinter.printHalfSnowman();
@@ -41,17 +34,18 @@ public class MessagePrinter {
         MessagePrinter.printHappySnowman();
         break;
     }
+
   }
 
   private static void printHappySnowman() {
-    hat();
+    printHat();
     System.out.println(happyFace);
     System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
     System.out.println(bodyLow);
   }
 
   private static void printNeutralSnowman() {
-    hat();
+    printHat();
     System.out.println(neutralFace);
     System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
     System.out.println(bodyLow);
@@ -63,27 +57,36 @@ public class MessagePrinter {
   }
 
   private static void printHalfSnowman() {
-    hat();
+    printHat();
     System.out.println(sadFace);
   }
 
-  private static void hat() {
+  private static void printHat() {
     System.out.println(hatTop);
     System.out.println(hatLow);
   }
 
-  public static void printWinMessage() { // TODO: Fix Win and Lose Message
+  public static void printWinMessage(String secretWord) { // TODO: Fix Win and Lose Message
     System.out.println("\n"
         + "░█████╗░░█████╗░███╗░░██╗░██████╗░██████╗░░█████╗░████████╗██╗░░░██╗██╗░░░░░░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗\n"
         + "██╔══██╗██╔══██╗████╗░██║██╔════╝░██╔══██╗██╔══██╗╚══██╔══╝██║░░░██║██║░░░░░██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝\n"
-        + "░░░╚═╝░░░░╚════╝░░╚═════╝░  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝");
+        + "██║░░╚═╝██║░░██║██╔██╗██║██║░░██╗░██████╔╝███████║░░░██║░░░██║░░░██║██║░░░░░███████║░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░\n"
+        + "██║░░██╗██║░░██║██║╚████║██║░░╚██╗██╔══██╗██╔══██║░░░██║░░░██║░░░██║██║░░░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗\n"
+        + "╚█████╔╝╚█████╔╝██║░╚███║╚██████╔╝██║░░██║██║░░██║░░░██║░░░╚██████╔╝███████╗██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝\n"
+        + "░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░\n"
+        + "                                        Congratulations! Your word was: " + secretWord);
   }
 
-  public static void printLoseMessage() {
-    System.out.println("\n" + "██╗░░░██╗░█████╗░██╗░░░██╗  ██╗░░░░░░█████╗░░██████╗███████╗\n"
-        + "╚██╗░██╔╝██╔══██╗██║░░░██║  ██║░░░░░██╔══██╗██╔════╝██╔════╝\n"
-        + "░╚████╔╝░██║░░██║██║░░░██║  ██║░░░░░██║░░██║╚█████╗░█████╗░░\n"
-        + "░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚══════╝░╚════╝░╚═════╝░╚══════╝");
+  public static void printLoseMessage(String secretWord) {
+
+    System.out.println("\n"
+        + "░██████╗░░█████╗░███╗░░░███╗███████╗  ░█████╗░██╗░░░██╗███████╗██████╗░\n"
+        + "██╔════╝░██╔══██╗████╗░████║██╔════╝  ██╔══██╗██║░░░██║██╔════╝██╔══██╗\n"
+        + "██║░░██╗░███████║██╔████╔██║█████╗░░  ██║░░██║╚██╗░██╔╝█████╗░░██████╔╝\n"
+        + "██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░  ██║░░██║░╚████╔╝░██╔══╝░░██╔══██╗\n"
+        + "╚██████╔╝██║░░██║██║░╚═╝░██║███████╗  ╚█████╔╝░░╚██╔╝░░███████╗██║░░██║\n"
+        + "░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝  ░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n"
+        + "                 Oh no :(   Your word was: " + secretWord);
   }
 
   public static void printCurrentState(int remainingGuess, String wordPlaceholder,

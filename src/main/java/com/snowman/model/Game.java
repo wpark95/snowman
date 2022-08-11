@@ -4,7 +4,6 @@ import com.snowman.Main;
 import com.snowman.view.MessagePrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
 
 public class Game {
@@ -32,15 +31,26 @@ public class Game {
     while (remainingGuess >= 0) {
       System.out.println(secretWord); // TODO: This line is for testing. Delete it before Friday!
 
-      MessagePrinter.printSnowman(remainingGuess);
+      MessagePrinter.printSnowman(remainingGuess, secretWord);
       MessagePrinter.printCurrentState(remainingGuess, wordPlaceholder, triedWords);
-      System.out.println(MAKE_GUESS_PROMPT);
-      String guess = reader.readLine().toLowerCase().trim();
-      evaluateGuess(guess);
+      evaluateGuess();
     }
   }
 
-  public void evaluateGuess(String guess) throws IOException {
+  public void evaluateGuess() throws IOException {
+    boolean validationResult;
+    String guess;
+
+    do {
+      try {
+        System.out.println(MAKE_GUESS_PROMPT);
+        guess = reader.readLine().toLowerCase().trim();
+        validationResult = guess.matches("[a-zA-Z]+");
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } while (!validationResult);
+
     boolean wordGuessResult = secretWordContainsGuess(guess);
     if (!wordGuessResult) {
       remainingGuess--;
@@ -51,10 +61,6 @@ public class Game {
 
   private String makeNewWordPlaceholder(String userGuess, String secretWord) {
     String result = wordPlaceholder;
-    System.out.println(userGuess + "<<< that is you userGuess");
-    if (userGuess.length() == 0) {
-      userGuess = " ";
-    }
     char userLetter = userGuess.charAt(0);
     for (int i = 0; i < secretWord.length(); i++) {
       char currChar = secretWord.charAt(i);
@@ -64,16 +70,14 @@ public class Game {
         result = String.valueOf(chars);
       }
     }
-    System.out.println(Arrays.toString(wordPlaceholder.toCharArray()));
     return result;
   }
 
   private boolean secretWordContainsGuess(String userGuess) throws IOException {
     boolean result = false;
 
-    if (!triedWords.contains(userGuess) || userGuess.length() != 0) {
+    if (!triedWords.contains(userGuess)) {
       triedWords.add(userGuess);
-
       if (userGuess.length() > 1) {
         if (userGuess.equals(secretWord)) { // TODO: extract these three lines into a method & reuse
           winGame();
@@ -82,6 +86,7 @@ public class Game {
         }
       } else {
         if (secretWord.contains(userGuess)) {
+          wordPlaceholder = makeNewWordPlaceholder(userGuess, secretWord);
           if (wordPlaceholder.equals(secretWord)) {
             winGame();
           } else {
@@ -96,12 +101,11 @@ public class Game {
       result = true;
       System.out.println(String.format("Try again. You've already tried %s before", userGuess));
     }
-
     return result;
   }
 
   private void winGame() throws IOException {
-    MessagePrinter.printWinMessage();
+    MessagePrinter.printWinMessage(secretWord);
     Main.main(null); // Winning case
   }
 

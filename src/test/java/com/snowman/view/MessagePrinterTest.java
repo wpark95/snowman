@@ -13,23 +13,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 class MessagePrinterTest {
 
   private static final String HAT_TOP = "  *      /*\\  *    *";
-
   private static final String HAT_LOW = "    *  _/ _ \\_ *   * ";
-
   private static final String NEUTRAL_FACE = " *   * ('< ' ) *      *";
-
   private static final String SAD_FACE = " *   * (T< T ) *      *";
-
   private static final String HAPPY_FACE = " *   * (^< ^ ) *      *";
-
   private static final String BODY_TOP = "   * \\–(  :   )–/   *";
-
   private static final String BODY_LOW = "   *   (__: __)  *    *";
-
+  private static final String TEST_WORD = "TEST TEST 123";
 
   public static Stream<Arguments> remainingGuessSupplier() {
     return Stream.of(Arguments.of(
-//        0, "Sorry! You loose." + "\r\n",
+        0, "Sorry! You loose." + "\r\n",
         1, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + SAD_FACE + "\r\n", 2,
         HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + BODY_TOP + "\r\n", 3,
         HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + NEUTRAL_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
@@ -41,33 +35,21 @@ class MessagePrinterTest {
 
   }
 
-  @Test       //TODO Doesn't work, need to check.
-  void shouldPrintSnowman_caseZero() throws IOException {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    System.setOut(new PrintStream(outputStream));
-    SnowmanPrinter.printSnowman(0);
-    String actualPrompt = outputStream.toString();
-    System.out.println(actualPrompt);
-    Assertions.assertEquals("Sorry! You loose.", actualPrompt);
-  }
-
   @ParameterizedTest
   @MethodSource("remainingGuessSupplier")
-  void shouldPrintSnowman_caseOnePlus(int remainingGuess, String expectedPrompt)
-      throws IOException {
+  void shouldPrintSnowman_caseOnePlus(int remainingGuess, String expectedPrompt) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
-    SnowmanPrinter.printSnowman(remainingGuess);
+    MessagePrinter.printSnowman(remainingGuess, TEST_WORD);
     String actualPrompt = outputStream.toString();
     Assertions.assertEquals(expectedPrompt, actualPrompt);
-
   }
 
   @Test
   void shouldPrintWinSnowman() {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
-    SnowmanPrinter.youWinSnowman();
+    MessagePrinter.printWinMessage(TEST_WORD);
     String expectedPrompt = "Congratulations! You Win." + "\r\n";
     String actualPrompt = outputStream.toString();
     Assertions.assertEquals(expectedPrompt, actualPrompt);
@@ -77,11 +59,10 @@ class MessagePrinterTest {
   void shouldPrintLoseSnowman() {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
-    SnowmanPrinter.youLoseSnowman();
+    MessagePrinter.printLoseMessage(TEST_WORD);
     String expectedPrompt = "Sorry! You loose." + "\r\n";
     String actualPrompt = outputStream.toString();
     Assertions.assertEquals(expectedPrompt, actualPrompt);
-
-
   }
+
 }
