@@ -6,34 +6,32 @@ import java.util.Random;
 
 public class SnowmanPrinter {
 
-  private static final String hatTop = " *       /*\\  *    *";
-  private static final String hatLow = "   *   _/ _ \\_ *   * ";
-  private static final String neutralFace = " *   *  (‘< ‘ ) *      *";
-  private static final String sadFace = " *   *  (T< T ) *      *";
-  private static final String happyFace = " *   *  (^< ^ ) *      *";
-  private static final String bodyTop = "   * \\–(  :   )–/   *";
-  private static final String noHandsBodyTop = "   *    (  :   )     *";
-  private static final String bodyLow = " *    (__: __)  *    *";
-  private static final String hatTop1 = "         /*\\        ";
-  private static final String hatLow1 = "       _/ _ \\_       ";
-  private static final String sadFace1 = "        (T< T )         ";
-  private static final String bodyTop1 = "     \\–(  :   )–/    ";
-  private static final String bodyLow1 = "      (__: __)        ";
+  private static final String hatTop =         "  *      /*\\  *    *";
 
-  public static void printSnowman(int remainingGuess, int wordLength) throws IOException {
-    Random rand = new Random(); // TODO: Hide these two lines in SnowmanPrinter
-    int sadPoint =
-        1 + rand.nextInt(wordLength / 2); // TODO: Make sad point more flexible, not a fixed number.
+  private static final String hatLow =         "    *  _/ _ \\_ *   * ";
+
+  private static final String neutralFace =    " *   * ('< ' ) *      *";
+
+  private static final String sadFace =        " *   * (T< T ) *      *";
+
+  private static final String happyFace =      " *   * (^< ^ ) *      *";
+
+  private static final String bodyTop =        "   * \\–(  :   )–/   *";
+
+  private static final String bodyLow =        "   *   (__: __)  *    *";
+
+  public static void printSnowman(int remainingGuess) throws IOException {
+
     switch (remainingGuess) {
       case 0:
         SnowmanPrinter.youLoseSnowman();
         Main.main(null);
         break;
       case 1:
-        SnowmanPrinter.noBodySnowman();
+        SnowmanPrinter.halfSnowman();
         break;
       case 2:
-        SnowmanPrinter.noLowBodySnowman();
+        SnowmanPrinter.withoutLowerBodySnowman();
         break;
       case 3:
         SnowmanPrinter.neutralSnowman();
@@ -59,12 +57,12 @@ public class SnowmanPrinter {
     System.out.println(bodyLow);
   }
 
-  private static void noLowBodySnowman() {
-    noBodySnowman();
+  private static void withoutLowerBodySnowman() {
+    halfSnowman();
     System.out.println(bodyTop);
   }
 
-  private static void noBodySnowman() {
+  private static void halfSnowman() {
     hat();
     System.out.println(sadFace);
   }
