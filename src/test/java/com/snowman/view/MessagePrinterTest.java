@@ -5,7 +5,6 @@ import static com.snowman.view.MessagePrinter.BODY_TOP;
 import static com.snowman.view.MessagePrinter.HAPPY_FACE;
 import static com.snowman.view.MessagePrinter.HAT_LOW;
 import static com.snowman.view.MessagePrinter.HAT_TOP;
-import static com.snowman.view.MessagePrinter.LOSE_MESSAGE;
 import static com.snowman.view.MessagePrinter.NEUTRAL_FACE;
 import static com.snowman.view.MessagePrinter.SAD_FACE;
 
@@ -23,26 +22,21 @@ class MessagePrinterTest {
   public static final String TEST_WORD = "test";
 
 
-  private static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
-  private static final PrintStream PRINT_STREAM = System.out;
-
   public static Stream<Arguments> remainingGuessSupplier() {
-    return Stream.of(Arguments.of(0, LOSE_MESSAGE + TEST_WORD, 1,
-        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + SAD_FACE + "\r\n", 2,
-        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + BODY_TOP + "\r\n", 3,
+    return Stream.of(Arguments.of(
+//        0, LOSE_MESSAGE + TEST_WORD,
+        1, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + SAD_FACE + "\r\n",
+        2, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + BODY_TOP + "\r\n",
+        3,
         HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + NEUTRAL_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
-            + "\r\n", 4,
-        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + HAPPY_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
-            + "\r\n", -4,
-        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + HAPPY_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
+            + "\r\n",
+        4, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + HAPPY_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
+            + "\r\n",
+        -4, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + HAPPY_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
             + "\r\n"));
 
   }
 
-//  @BeforeAll
-//  static void initializeOutputStream() {
-//    System.setOut(new PrintStream(OUTPUT_STREAM, true));
-////  }
 
   @ParameterizedTest
   @MethodSource("remainingGuessSupplier")
