@@ -2,7 +2,7 @@ package com.snowman.view;
 
 import org.junit.jupiter.api.Test;
 
-class SnowmanPrinterTest {
+class MessagePrinterTest {
 
   @Test
   void printSnowman() {
