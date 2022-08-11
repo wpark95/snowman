@@ -2,7 +2,6 @@ package com.snowman.view;
 
 import com.snowman.Main;
 import java.io.IOException;
-import java.util.Random;
 
 public class SnowmanPrinter {
 
@@ -28,46 +27,46 @@ public class SnowmanPrinter {
         Main.main(null);
         break;
       case 1:
-        SnowmanPrinter.halfSnowman();
+        SnowmanPrinter.printHalfSnowman();
         break;
       case 2:
-        SnowmanPrinter.withoutLowerBodySnowman();
+        SnowmanPrinter.printWithNoLowerBodySnowman();
         break;
       case 3:
-        SnowmanPrinter.neutralSnowman();
+        SnowmanPrinter.printNeutralFaceSnowman();
         break;
       default:
-        SnowmanPrinter.happySnowman();
+        SnowmanPrinter.printHappySnowman();
         break;
     }
 
   }
 
-  private static void happySnowman() {
-    hat();
+  private static void printHappySnowman() {
+    printHat();
     System.out.println(happyFace);
     System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
     System.out.println(bodyLow);
   }
 
-  private static void neutralSnowman() {
-    hat();
+  private static void printNeutralFaceSnowman() {
+    printHat();
     System.out.println(neutralFace);
     System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
     System.out.println(bodyLow);
   }
 
-  private static void withoutLowerBodySnowman() {
-    halfSnowman();
+  private static void printWithNoLowerBodySnowman() {
+    printHalfSnowman();
     System.out.println(bodyTop);
   }
 
-  private static void halfSnowman() {
-    hat();
+  private static void printHalfSnowman() {
+    printHat();
     System.out.println(sadFace);
   }
 
-  private static void hat() {
+  private static void printHat() {
     System.out.println(hatTop);
     System.out.println(hatLow);
   }
