@@ -1,7 +1,15 @@
 package com.snowman.view;
 
+import static com.snowman.view.MessagePrinter.BODY_LOW;
+import static com.snowman.view.MessagePrinter.BODY_TOP;
+import static com.snowman.view.MessagePrinter.HAPPY_FACE;
+import static com.snowman.view.MessagePrinter.HAT_LOW;
+import static com.snowman.view.MessagePrinter.HAT_TOP;
+import static com.snowman.view.MessagePrinter.LOSE_MESSAGE;
+import static com.snowman.view.MessagePrinter.NEUTRAL_FACE;
+import static com.snowman.view.MessagePrinter.SAD_FACE;
+
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
@@ -12,19 +20,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class MessagePrinterTest {
 
-  private static final String HAT_TOP = "  *      /*\\  *    *";
-  private static final String HAT_LOW = "    *  _/ _ \\_ *   * ";
-  private static final String NEUTRAL_FACE = " *   * ('< ' ) *      *";
-  private static final String SAD_FACE = " *   * (T< T ) *      *";
-  private static final String HAPPY_FACE = " *   * (^< ^ ) *      *";
-  private static final String BODY_TOP = "   * \\–(  :   )–/   *";
-  private static final String BODY_LOW = "   *   (__: __)  *    *";
-  private static final String TEST_WORD = "TEST TEST 123";
+  public static final String TEST_WORD = "test";
+
+
+  private static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
+  private static final PrintStream PRINT_STREAM = System.out;
 
   public static Stream<Arguments> remainingGuessSupplier() {
-    return Stream.of(Arguments.of(
-        0, "Sorry! You loose." + "\r\n",
-        1, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + SAD_FACE + "\r\n", 2,
+    return Stream.of(Arguments.of(0, LOSE_MESSAGE + TEST_WORD, 1,
+        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + SAD_FACE + "\r\n", 2,
         HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + BODY_TOP + "\r\n", 3,
         HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + NEUTRAL_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
             + "\r\n", 4,
@@ -34,6 +38,11 @@ class MessagePrinterTest {
             + "\r\n"));
 
   }
+
+//  @BeforeAll
+//  static void initializeOutputStream() {
+//    System.setOut(new PrintStream(OUTPUT_STREAM, true));
+////  }
 
   @ParameterizedTest
   @MethodSource("remainingGuessSupplier")
@@ -46,13 +55,11 @@ class MessagePrinterTest {
   }
 
   @Test
-  void shouldPrintWinSnowman() {
+  void shouldPrintWinSnowman(String secretWord) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
-    MessagePrinter.printWinMessage(TEST_WORD);
-    String expectedPrompt = "Congratulations! You Win." + "\r\n";
     String actualPrompt = outputStream.toString();
-    Assertions.assertEquals(expectedPrompt, actualPrompt);
+    Assertions.assertEquals(MessagePrinter.WIN_MESSAGE, actualPrompt);
   }
 
   @Test
