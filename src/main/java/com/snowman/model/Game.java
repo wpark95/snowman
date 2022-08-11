@@ -40,8 +40,7 @@ public class Game {
   }
 
   public void evaluateGuess(String guess) throws IOException {
-    boolean wordGuessResult = secretWordContainsGuess(guess, triedWords, secretWord,
-        wordPlaceholder);
+    boolean wordGuessResult = secretWordContainsGuess(guess);
     if (!wordGuessResult) {
       remainingGuess--;
     } else {
@@ -64,8 +63,7 @@ public class Game {
     return result;
   }
 
-  private boolean secretWordContainsGuess(String userGuess, Set<String> triedWords,
-      String secretWord, String wordPlaceholder) throws IOException {
+  private boolean secretWordContainsGuess(String userGuess) throws IOException {
     boolean result = false;
 
     if (!triedWords.contains(userGuess)) {
