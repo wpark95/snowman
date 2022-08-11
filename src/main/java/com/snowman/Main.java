@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 public class Main {
 
   private static final String BUNDLE_NAME = "strings";
+  private static String gameMode; //remove static when can
 
   /**
    * @param args Command-line arguments.
@@ -26,14 +27,14 @@ public class Main {
     WordListProcessor words = new WordListProcessor();
     Random rng = new Random();
 
-//    while ((gameMode == null) || !gameMode.equals("2") || !gameMode.equals("1")) {
-    String gameMode = promptGameMode(reader);
-    if (gameMode.equals("1")) {
-      SinglePlayer game = new SinglePlayer(reader, words, bundle, rng);
-    } else if (gameMode.equals("2")) {
-      multiPlayer();
+    while ((gameMode == null) || !gameMode.equals("2") || !gameMode.equals("1")) {
+      gameMode = promptGameMode(reader);
+      if (gameMode.equals("1")) {
+        SinglePlayer game = new SinglePlayer(reader, words, bundle);
+      } else if (gameMode.equals("2")) {
+        multiPlayer();
+      }
     }
-//    }
   }
 
   private static String promptGameMode(BufferedReader reader) throws IOException {
