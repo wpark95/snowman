@@ -1,19 +1,33 @@
 package com.snowman.view;
 
-import com.snowman.Main;
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 public class MessagePrinter {
 
-  private static final String hatTop = "  *      /*\\  *    *";
-  private static final String hatLow = "    *  _/ _ \\_ *   * ";
-  private static final String neutralFace = " *   * ('< ' ) *      *";
-  private static final String sadFace = " *   * (T< T ) *      *";
-  private static final String happyFace = " *   * (^< ^ ) *      *";
-  private static final String bodyTop = "   * \\–(  :   )–/   *";
-  private static final String bodyLow = "   *   (__: __)  *    *";
+  public static final String WIN_MESSAGE =
+      "░█████╗░░█████╗░███╗░░██╗░██████╗░██████╗░░█████╗░████████╗██╗░░░██╗██╗░░░░░░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗\n"
+          + "██╔══██╗██╔══██╗████╗░██║██╔════╝░██╔══██╗██╔══██╗╚══██╔══╝██║░░░██║██║░░░░░██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝\n"
+          + "██║░░╚═╝██║░░██║██╔██╗██║██║░░██╗░██████╔╝███████║░░░██║░░░██║░░░██║██║░░░░░███████║░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░\n"
+          + "██║░░██╗██║░░██║██║╚████║██║░░╚██╗██╔══██╗██╔══██║░░░██║░░░██║░░░██║██║░░░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗\n"
+          + "╚█████╔╝╚█████╔╝██║░╚███║╚██████╔╝██║░░██║██║░░██║░░░██║░░░╚██████╔╝███████╗██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝\n"
+          + "░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░\n"
+          + "                                        Congratulations! Your word was: ";
+  public static final String LOSE_MESSAGE =
+      "░██████╗░░█████╗░███╗░░░███╗███████╗  ░█████╗░██╗░░░██╗███████╗██████╗░\n"
+          + "██╔════╝░██╔══██╗████╗░████║██╔════╝  ██╔══██╗██║░░░██║██╔════╝██╔══██╗\n"
+          + "██║░░██╗░███████║██╔████╔██║█████╗░░  ██║░░██║╚██╗░██╔╝█████╗░░██████╔╝\n"
+          + "██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░  ██║░░██║░╚████╔╝░██╔══╝░░██╔══██╗\n"
+          + "╚██████╔╝██║░░██║██║░╚═╝░██║███████╗  ╚█████╔╝░░╚██╔╝░░███████╗██║░░██║\n"
+          + "░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝  ░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n"
+          + "                 Oh no :(   Your word was: ";
+
+  public static final String HAT_TOP = "  *      /*\\  *    *";
+  public static final String HAT_LOW = "    *  _/ _ \\_ *   * ";
+  public static final String NEUTRAL_FACE = " *   * ('< ' ) *      *";
+  public static final String SAD_FACE = " *   * (T< T ) *      *";
+  public static final String HAPPY_FACE = " *   * (^< ^ ) *      *";
+  public static final String BODY_TOP = "   * \\–(  :   )–/   *";
+  public static final String BODY_LOW = "   *   (__: __)  *    *";
 
   public static void printSnowman(int remainingGuess, String secretWord) {
 
@@ -39,31 +53,31 @@ public class MessagePrinter {
 
   private static void printHappySnowman() {
     printHat();
-    System.out.println(happyFace);
-    System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
-    System.out.println(bodyLow);
+    System.out.println(HAPPY_FACE);
+    System.out.println(BODY_TOP); // TODO: Fix redundancy in printing the snowman.
+    System.out.println(BODY_LOW);
   }
 
   private static void printNeutralSnowman() {
     printHat();
-    System.out.println(neutralFace);
-    System.out.println(bodyTop); // TODO: Fix redundancy in printing the snowman.
-    System.out.println(bodyLow);
+    System.out.println(NEUTRAL_FACE);
+    System.out.println(BODY_TOP); // TODO: Fix redundancy in printing the snowman.
+    System.out.println(BODY_LOW);
   }
 
   private static void printTopBodyOnlySnowman() {
     printHalfSnowman();
-    System.out.println(bodyTop);
+    System.out.println(BODY_TOP);
   }
 
   private static void printHalfSnowman() {
     printHat();
-    System.out.println(sadFace);
+    System.out.println(SAD_FACE);
   }
 
   private static void printHat() {
-    System.out.println(hatTop);
-    System.out.println(hatLow);
+    System.out.println(HAT_TOP);
+    System.out.println(HAT_LOW);
   }
 
   public static void printWinMessage(String secretWord) { // TODO: Fix Win and Lose Message
