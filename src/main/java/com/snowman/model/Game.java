@@ -4,6 +4,7 @@ import com.snowman.Main;
 import com.snowman.view.MessagePrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Set;
 
 public class Game {
@@ -44,13 +45,16 @@ public class Game {
     if (!wordGuessResult) {
       remainingGuess--;
     } else {
-      wordPlaceholder = makeNewWordPlaceholder(guess, secretWord, wordPlaceholder);
+      wordPlaceholder = makeNewWordPlaceholder(guess, secretWord);
     }
   }
 
-  private String makeNewWordPlaceholder(String userGuess, String secretWord,
-      String wordPlaceholder) {
+  private String makeNewWordPlaceholder(String userGuess, String secretWord) {
     String result = wordPlaceholder;
+    System.out.println(userGuess + "<<< that is you userGuess");
+    if (userGuess.length() == 0) {
+      userGuess = " ";
+    }
     char userLetter = userGuess.charAt(0);
     for (int i = 0; i < secretWord.length(); i++) {
       char currChar = secretWord.charAt(i);
@@ -60,13 +64,14 @@ public class Game {
         result = String.valueOf(chars);
       }
     }
+    System.out.println(Arrays.toString(wordPlaceholder.toCharArray()));
     return result;
   }
 
   private boolean secretWordContainsGuess(String userGuess) throws IOException {
     boolean result = false;
 
-    if (!triedWords.contains(userGuess)) {
+    if (!triedWords.contains(userGuess) || userGuess.length() != 0) {
       triedWords.add(userGuess);
 
       if (userGuess.length() > 1) {
