@@ -6,7 +6,6 @@ import com.snowman.view.Keys;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class SinglePlayer {
@@ -15,9 +14,10 @@ public class SinglePlayer {
   public static final int DEFAULT_MIN_GUESS = 1;
   public static final int DEFAULT_MAX_WORD_LENGTH = 15;
   public static final int DEFAULT_MIN_WORD_LENGTH = 4;
-  public String userInput;
 
   private final Game game;
+  public String userInput;
+
 
   public SinglePlayer(BufferedReader reader, WordListProcessor words, ResourceBundle bundle)
       throws IOException {
@@ -30,8 +30,7 @@ public class SinglePlayer {
         userWordLengthCount = promptUserWordLength(reader, wordLengthPreferencePrompt);
       } catch (IOException e) {
         throw new RuntimeException(e);
-      } catch (NumberFormatException e) {
-        //ignore exception
+      } catch (NumberFormatException ignored) {
       }
     } while (userWordLengthCount < DEFAULT_MIN_WORD_LENGTH || userWordLengthCount > DEFAULT_MAX_WORD_LENGTH);
     int wordLength = userWordLengthCount;
@@ -42,8 +41,7 @@ public class SinglePlayer {
         userGuessCount = promptUserGuess(reader, guessNumPreferencePrompt);
       } catch (IOException e) {
         throw new RuntimeException(e);
-      } catch (NumberFormatException e) {
-        //ignore exception
+      } catch (NumberFormatException ignored) {
       }
     } while (userGuessCount < DEFAULT_MIN_GUESS || userGuessCount > DEFAULT_MAX_GUESS);
     int remainingGuess = userGuessCount;

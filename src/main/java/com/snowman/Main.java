@@ -25,12 +25,11 @@ public class Main {
     ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME);
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     WordListProcessor words = new WordListProcessor();
-    Random rng = new Random();
 
     while ((gameMode == null) || !gameMode.equals("2") || !gameMode.equals("1")) {
       gameMode = promptGameMode(reader);
       if (gameMode.equals("1")) {
-        SinglePlayer game = new SinglePlayer(reader, words, bundle);
+        new SinglePlayer(reader, words, bundle);
       } else if (gameMode.equals("2")) {
         multiPlayer();
       }
