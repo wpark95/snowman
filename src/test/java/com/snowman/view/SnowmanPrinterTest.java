@@ -29,35 +29,32 @@ class SnowmanPrinterTest {
 
   public static Stream<Arguments> remainingGuessSupplier() {
     return Stream.of(Arguments.of(
-        0, "Sorry! You loose.",
-        1, HAT_TOP + "\r\n"
-            + HAT_LOW + "\r\n"
-            + SAD_FACE + "\r\n",
-        2, HAT_TOP + "\r\n"
-            + HAT_LOW + "\r\n"
-            + BODY_TOP + "\r\n",
-        3, HAT_TOP + "\r\n"
-            + HAT_LOW + "\r\n"
-            + NEUTRAL_FACE + "\r\n"
-            + BODY_TOP + "\r\n"
-            + BODY_LOW + "\r\n",
-        4, HAT_TOP + "\r\n"
-            + HAT_LOW + "\r\n"
-            + HAPPY_FACE + "\r\n"
-            + BODY_TOP + "\r\n"
-            + BODY_LOW + "\r\n",
-        -4, HAT_TOP + "\r\n"
-            + HAT_LOW + "\r\n"
-            + HAPPY_FACE + "\r\n"
-            + BODY_TOP + "\r\n"
-            + BODY_LOW + "\r\n")
-    );
+//        0, "Sorry! You loose." + "\r\n",
+        1, HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + SAD_FACE + "\r\n", 2,
+        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + BODY_TOP + "\r\n", 3,
+        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + NEUTRAL_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
+            + "\r\n", 4,
+        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + HAPPY_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
+            + "\r\n", -4,
+        HAT_TOP + "\r\n" + HAT_LOW + "\r\n" + HAPPY_FACE + "\r\n" + BODY_TOP + "\r\n" + BODY_LOW
+            + "\r\n"));
 
+  }
+
+  @Test       //TODO Doesn't work, need to check.
+  void shouldPrintSnowman_caseZero() throws IOException {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outputStream));
+    SnowmanPrinter.printSnowman(0);
+    String actualPrompt = outputStream.toString();
+    System.out.println(actualPrompt);
+    Assertions.assertEquals("Sorry! You loose.", actualPrompt);
   }
 
   @ParameterizedTest
   @MethodSource("remainingGuessSupplier")
-  void shouldPrintSnowman(int remainingGuess, String expectedPrompt) throws IOException {
+  void shouldPrintSnowman_caseOnePlus(int remainingGuess, String expectedPrompt)
+      throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
     SnowmanPrinter.printSnowman(remainingGuess);
