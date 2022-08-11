@@ -37,7 +37,6 @@ class MessagePrinterTest {
 
   }
 
-
   @ParameterizedTest
   @MethodSource("remainingGuessSupplier")
   void shouldPrintSnowman_caseOnePlus(int remainingGuess, String expectedPrompt) {
