@@ -1,117 +1,104 @@
 package com.snowman.model;
 
-import com.snowman.Main;
-import com.snowman.view.MessagePrinter;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Game {
 
-  public static final String MAKE_GUESS_PROMPT = "Make a guess!";
-  public static final String UNSEEN_LETTER_PLACEHOLDER = "_";
   private final Set<String> triedWords;
-  private final String secretWord;
-  private final BufferedReader reader;
+  private String secretWord;
+  private String currentGuessState;
 
   private int remainingGuess;
-  private String wordPlaceholder;
 
-  public Game(Set<String> triedWords, int wordLength, int initialGuess, String secretWord,
-      BufferedReader reader) {
-    this.triedWords = triedWords;
-    this.remainingGuess = initialGuess;
-    this.secretWord = secretWord;
-    this.reader = reader;
-    wordPlaceholder = UNSEEN_LETTER_PLACEHOLDER.repeat(wordLength);
+  private boolean isOver;
+
+  public Game() {
+    triedWords = new HashSet<>();
   }
 
-  public void play() throws IOException {
-    while (remainingGuess > 0) {
-      System.out.println(secretWord); // TODO: This line is for testing. Delete it before Friday!
-
-      MessagePrinter.printSnowman(remainingGuess, secretWord);
-      MessagePrinter.printCurrentState(remainingGuess, wordPlaceholder, triedWords);
-      evaluateGuess();
-    }
-    loseGame();
+  public void setInitial(int initialGuess, String randomWord) {
+    remainingGuess = initialGuess;
+    secretWord = randomWord;
+    currentGuessState = "_".repeat(randomWord.length());
   }
 
-  public void evaluateGuess() throws IOException {
-    boolean validationResult;
-    String guess;
-
-    do {
-      try {
-        System.out.println(MAKE_GUESS_PROMPT);
-        guess = reader.readLine().toLowerCase().trim();
-        validationResult = guess.matches("[a-zA-Z]+");
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    } while (!validationResult && remainingGuess > 0);
-
-    boolean wordGuessResult = secretWordContainsGuess(guess);
-    if (!wordGuessResult) {
-      remainingGuess--;
+  public boolean isDuplicateGuess(String guess) {
+    boolean result = false;
+    if (triedWords.contains(guess)) {
+      result = true;
     } else {
-      wordPlaceholder = makeNewWordPlaceholder(guess, secretWord);
+      triedWords.add(guess);
     }
+    return result;
   }
 
-  private String makeNewWordPlaceholder(String userGuess, String secretWord) {
-    String result = wordPlaceholder;
-    char userLetter = userGuess.charAt(0);
+  public boolean evaluateGuess(String guess) {
+    boolean result = false;
+
+    if (guess.length() > 1) { // If the guess is a word
+      if (guess.equals(secretWord)) {
+        setCurrentGuessState(secretWord);
+        result = true;
+      } else {
+        remainingGuess--;
+      }
+    } else { // If the guess is a letter
+      if (secretWord.contains(guess)) {
+        setCurrentGuessState(updateGuessState(guess, secretWord));
+        result = true;
+      } else {
+        remainingGuess--;
+      }
+    }
+    return result;
+  }
+
+  private String updateGuessState(String guess, String secretWord) {
+    String newGuessState = getCurrentGuessState();
+    char userLetter = guess.charAt(0);
+
     for (int i = 0; i < secretWord.length(); i++) {
       char currChar = secretWord.charAt(i);
       if (currChar == userLetter) {
-        char[] chars = result.toCharArray();
+        char[] chars = newGuessState.toCharArray();
         chars[i] = userLetter;
-        result = String.valueOf(chars);
+        newGuessState = String.valueOf(chars);
       }
     }
-    return result;
+    return newGuessState;
   }
 
-  private boolean secretWordContainsGuess(String userGuess) throws IOException {
-    boolean result = false;
-
-    if (!triedWords.contains(userGuess)) {
-      triedWords.add(userGuess);
-      if (userGuess.length() > 1) {
-        if (userGuess.equals(secretWord)) { // TODO: extract these three lines into a method & reuse
-          winGame();
-        } else {
-          System.out.println("Wrong word. Come on, I'm going to melt!"); // TODO: This should be view.
-        }
-      } else {
-        if (secretWord.contains(userGuess)) {
-          wordPlaceholder = makeNewWordPlaceholder(userGuess, secretWord);
-          if (wordPlaceholder.equals(secretWord)) {
-            winGame();
-          } else {
-            result = true;
-          }
-        } else {
-          System.out.println("Wrong guess. Come on, I'm melting!"); // TODO: This should be view.
-        }
-      }
-
-    } else {
-      result = true;
-      System.out.println(String.format("Try again. You've already tried %s before", userGuess));
+  public void updateIsOver() {
+    if (currentGuessState.equals(secretWord)) {
+      setOver(true);
     }
-    return result;
+    if (remainingGuess == 0) {
+      setOver(true);
+    }
   }
 
-  private void winGame() throws IOException {
-    MessagePrinter.printWinMessage(secretWord);
-    Main.main(null); // Winning case
+  public boolean hasWon() {
+    if (currentGuessState.equals(secretWord)) {
+      return true;
+    }
+    return false;
   }
 
-  private void loseGame() throws IOException {
-    MessagePrinter.printLoseMessage(secretWord);
-    Main.main(null);
+  public boolean isOver() {
+    return isOver;
+  }
+
+  public void setOver(boolean over) {
+    isOver = over;
+  }
+
+  public String getCurrentGuessState() {
+    return currentGuessState;
+  }
+
+  public void setCurrentGuessState(String currentGuessState) {
+    this.currentGuessState = currentGuessState;
   }
 
 }

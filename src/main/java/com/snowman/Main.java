@@ -2,8 +2,10 @@ package com.snowman;
 
 import com.snowman.controller.MultiPlayer;
 import com.snowman.controller.SinglePlayer;
+import com.snowman.model.Game;
 import com.snowman.model.WordListProcessor;
 import com.snowman.view.MessagePrinter;
+import com.snowman.view.SinglePlayerView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,9 +25,9 @@ public class Main {
    *                     operations.
    */
   public static void main(String[] args) {
-    ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME);
+    ResourceBundle stringBundle = ResourceBundle.getBundle(BUNDLE_NAME);
     WordListProcessor words = new WordListProcessor();
-    String gameModePrompt = bundle.getString("game_mode");
+    String gameModePrompt = stringBundle.getString("game_mode");
 
     welcomeInitialRun();
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -35,7 +37,10 @@ public class Main {
         String gameMode = promptGameMode(reader, gameModePrompt);
         switch (gameMode) {
           case "1":
-            new SinglePlayer(reader, words, bundle);
+            Game game = new Game();
+            SinglePlayerView view = new SinglePlayerView();
+            SinglePlayer player = new SinglePlayer(game, view, words, stringBundle, reader);
+            player.play();
             break;
           case "2":
             new MultiPlayer();
