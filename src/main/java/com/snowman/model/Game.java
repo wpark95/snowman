@@ -28,13 +28,14 @@ public class Game {
   }
 
   public void play() throws IOException {
-    while (remainingGuess >= 0) {
+    while (remainingGuess > 0) {
       System.out.println(secretWord); // TODO: This line is for testing. Delete it before Friday!
 
       MessagePrinter.printSnowman(remainingGuess, secretWord);
       MessagePrinter.printCurrentState(remainingGuess, wordPlaceholder, triedWords);
       evaluateGuess();
     }
+    loseGame();
   }
 
   public void evaluateGuess() throws IOException {
@@ -49,7 +50,7 @@ public class Game {
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
-    } while (!validationResult);
+    } while (!validationResult && remainingGuess > 0);
 
     boolean wordGuessResult = secretWordContainsGuess(guess);
     if (!wordGuessResult) {
@@ -107,6 +108,11 @@ public class Game {
   private void winGame() throws IOException {
     MessagePrinter.printWinMessage(secretWord);
     Main.main(null); // Winning case
+  }
+
+  private void loseGame() throws IOException {
+    MessagePrinter.printLoseMessage(secretWord);
+    Main.main(null);
   }
 
 }
