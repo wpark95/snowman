@@ -20,9 +20,11 @@ public class SinglePlayerView {
   }
 
   public void displayCurrentState() {
-    System.out.println(getTriedWords());
-    System.out.println(getCurrentGuessState());
-    System.out.println(getRemainingGuess());
+    System.out.println(
+        "Your remaining guesses: "
+            + getRemainingGuess());
+    System.out.println("You have tried so far: " + getTriedWords());
+    System.out.println("Mystery word : " + getCurrentGuessState());
     printSnowman(getRemainingGuess());
   }
 
@@ -45,7 +47,7 @@ public class SinglePlayerView {
 
   public void printGameResult(boolean hasWon, String secretWord) {
     if (hasWon) {
-      printWinMessage();
+      printWinMessage(secretWord);
     } else {
       printLoseMessage(secretWord);
     }
@@ -83,19 +85,14 @@ public class SinglePlayerView {
     System.out.println(Messages.BODY_LOW);
   }
 
-  public static void printWinMessage() {
-    System.out.println(Messages.WIN_MESSAGE);
+  public static void printWinMessage(String secretWord) {
+    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    System.out.println(Messages.WIN_MESSAGE + secretWord);
   }
 
   public static void printLoseMessage(String secretWord) {
+    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     System.out.println(Messages.LOSE_MESSAGE + secretWord);
-  }
-
-  public static void printCurrentState(int remainingGuess, String wordPlaceholder,
-      Set<String> triedWords) {
-    System.out.println("Your remaining guesses: " + remainingGuess);
-    System.out.println("You have tried so far: " + triedWords);
-    System.out.println("Mystery word : " + wordPlaceholder);
   }
 
   public Set<String> getTriedWords() {

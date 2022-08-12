@@ -38,12 +38,14 @@ public class Game {
         setCurrentGuessState(guess);
       } else {
         setRemainingGuess(remainingGuess - 1);
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOh no! I'm melting!");
       }
     } else { // If the guess is a letter
       if (getSecretWord().contains(guess)) {
         setCurrentGuessState(updateGuessState(guess, getSecretWord()));
       } else {
         setRemainingGuess(remainingGuess - 1);
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOh no! I'm melting!");
       }
     }
   }
@@ -58,6 +60,7 @@ public class Game {
         char[] chars = newGuessState.toCharArray();
         chars[i] = userLetter;
         newGuessState = String.valueOf(chars);
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGreat job!");
       }
     }
     return newGuessState;
@@ -98,6 +101,7 @@ public class Game {
 
   public void setCurrentGuessState(String currentGuessState) {
     this.currentGuessState = currentGuessState;
+
   }
 
   public int getRemainingGuess() {

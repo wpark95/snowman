@@ -51,7 +51,7 @@ public class SinglePlayer {
     int initialGuess = getGuessNumPreference(guessNumPreferencePrompt);
     String randomWord = words.wordChoice(wordLength);
     game.setInitial(initialGuess, randomWord);
-    System.out.println(randomWord); //TODO: Displaying the secret word for demo.
+    System.out.println(randomWord + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //TODO: Displaying the secret word for demo.
   }
 
   public String getUserGuess() {
