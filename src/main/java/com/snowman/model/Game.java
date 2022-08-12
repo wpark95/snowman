@@ -10,7 +10,6 @@ public class Game {
 
   public static final String MAKE_GUESS_PROMPT = "Make a guess!";
   public static final String UNSEEN_LETTER_PLACEHOLDER = "_";
-
   private final Set<String> triedWords;
   private final String secretWord;
   private final BufferedReader reader;
