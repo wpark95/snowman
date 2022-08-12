@@ -70,32 +70,30 @@ public class SinglePlayer {
   }
 
   private int getGuessNumPreference(String guessNumPreferencePrompt) {
-    int userGuessCount = 0;
+    int userGuessInput = 0;
     do {
       try {
-        userGuessCount = promptUserGuess(reader, guessNumPreferencePrompt);
+        userGuessInput = promptUserGuess(reader, guessNumPreferencePrompt);
       } catch (IOException e) {
         throw new RuntimeException(e);
       } catch (NumberFormatException ignored) {
       }
-    } while (userGuessCount < DEFAULT_MIN_GUESS || userGuessCount > DEFAULT_MAX_GUESS);
-    int remainingGuess = userGuessCount;
-    return remainingGuess;
+    } while (userGuessInput < DEFAULT_MIN_GUESS || userGuessInput > DEFAULT_MAX_GUESS);
+    return userGuessInput;
   }
 
   private int getWordLengthPreference(String wordLengthPreferencePrompt) {
-    int userWordLengthCount = 0;
+    int userWordLengthInput = 0;
     do {
       try {
-        userWordLengthCount = promptUserWordLength(reader, wordLengthPreferencePrompt);
+        userWordLengthInput = promptUserWordLength(reader, wordLengthPreferencePrompt);
       } catch (IOException e) {
         throw new RuntimeException(e);
       } catch (NumberFormatException ignored) {
       }
-    } while (userWordLengthCount < DEFAULT_MIN_WORD_LENGTH
-        || userWordLengthCount > DEFAULT_MAX_WORD_LENGTH);
-    int wordLength = userWordLengthCount;
-    return wordLength;
+    } while (userWordLengthInput < DEFAULT_MIN_WORD_LENGTH
+        || userWordLengthInput > DEFAULT_MAX_WORD_LENGTH);
+    return userWordLengthInput;
   }
 
   private int promptUserWordLength(BufferedReader reader, String prompt)
