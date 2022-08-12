@@ -24,7 +24,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class SinglePlayerViewTest {
 
-  SinglePlayerView view = new SinglePlayerView();
+  private final SinglePlayerView view = new SinglePlayerView();
 
   public static Stream<Arguments> testPrintSnowman() {
     return Stream.of(
