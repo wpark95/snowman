@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents the state of a game of Snowman in single-player mode. This class acts as the view
+ * Represents the state of a game of Snowman in single-player mode. This class acts as the model
  * component (MVC) for its controller {@link com.snowman.controller.SinglePlayer}.
  */
 public class Game {
