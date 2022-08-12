@@ -186,7 +186,7 @@ public class SinglePlayer {
    * Updates view {@link SinglePlayerView} (MVC) for this controller.
    */
   private void updateView() {
-    view.updateCurrentState(game.getTriedWords(), game.getCurrentGuessState(), game.getSecretWord(),
+    view.updateCurrentState(game.getTriedGuesses(), game.getCurrentGuessState(), game.getSecretWord(),
         game.getRemainingGuess());
   }
 
