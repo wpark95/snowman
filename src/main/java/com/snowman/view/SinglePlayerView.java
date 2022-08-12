@@ -1,6 +1,5 @@
 package com.snowman.view;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class SinglePlayerView {
@@ -19,6 +18,13 @@ public class SinglePlayerView {
     setSecretWord(secretWord);
   }
 
+  public void displayGuessResult(boolean isRight) {
+    if (isRight) {
+      System.out.println(Messages.ANSI_GREEN + "\n\n\nGreat job, you are keeping me cold!\n" + Messages.ANSI_RESET);
+    } else {
+      System.out.println(Messages.ANSI_RED + "\n\n\nReally, Nick Bennett? You are going to let me melt like this?\n" + Messages.ANSI_RESET);
+    }
+  }
   public void displayCurrentState() {
     System.out.println(
         "Your remaining guesses: "
