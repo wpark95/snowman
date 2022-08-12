@@ -41,6 +41,7 @@ public class SinglePlayer {
       }
       game.updateIsOver();
     }
+    view.printGameResult(game.hasWon(), game.getSecretWord());
   }
 
   public void getInitialSetup() {
@@ -111,7 +112,7 @@ public class SinglePlayer {
   }
 
   private void updateView() {
-    view.updateCurrentState(game.getTriedWords(), game.getCurrentGuessState(),
+    view.updateCurrentState(game.getTriedWords(), game.getCurrentGuessState(), game.getSecretWord(),
         game.getRemainingGuess());
   }
 
