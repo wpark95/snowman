@@ -20,11 +20,15 @@ public class SinglePlayerView {
 
   public void displayGuessResult(boolean isRight) {
     if (isRight) {
-      System.out.println(Messages.ANSI_GREEN + "\n\n\nGreat job, you are keeping me cold!\n" + Messages.ANSI_RESET);
+      System.out.println(Messages.ANSI_GREEN + "\n\n\nGreat job, you are keeping me cold!\n"
+          + Messages.ANSI_RESET);
     } else {
-      System.out.println(Messages.ANSI_RED + "\n\n\nReally, Nick Bennett? You are going to let me melt like this?\n" + Messages.ANSI_RESET);
+      System.out.println(Messages.ANSI_RED
+          + "\n\n\nReally, Nick Bennett? You are going to let me melt like this?\n"
+          + Messages.ANSI_RESET);
     }
   }
+
   public void displayCurrentState() {
     System.out.println(
         "Your remaining guesses: "
@@ -92,12 +96,10 @@ public class SinglePlayerView {
   }
 
   public static void printWinMessage(String secretWord) {
-    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     System.out.println(Messages.WIN_MESSAGE + secretWord);
   }
 
   public static void printLoseMessage(String secretWord) {
-    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     System.out.println(Messages.LOSE_MESSAGE + secretWord);
   }
 
