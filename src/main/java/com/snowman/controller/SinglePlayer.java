@@ -32,7 +32,8 @@ public class SinglePlayer {
         throw new RuntimeException(e);
       } catch (NumberFormatException ignored) {
       }
-    } while (userWordLengthCount < DEFAULT_MIN_WORD_LENGTH || userWordLengthCount > DEFAULT_MAX_WORD_LENGTH);
+    } while (userWordLengthCount < DEFAULT_MIN_WORD_LENGTH
+        || userWordLengthCount > DEFAULT_MAX_WORD_LENGTH);
     int wordLength = userWordLengthCount;
 
     int userGuessCount = 0;

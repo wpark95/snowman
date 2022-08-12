@@ -43,6 +43,7 @@ public class Main {
     return reader.readLine().trim();
   }
 
+
   static void multiPlayer() {
     System.out.println("Sorry, the multiplayer feature is not ready yet.");
   }
