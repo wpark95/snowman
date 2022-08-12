@@ -1,12 +1,14 @@
 package com.snowman;
 
+import com.snowman.controller.MultiPlayer;
 import com.snowman.controller.SinglePlayer;
+import com.snowman.model.Game;
 import com.snowman.model.WordListProcessor;
 import com.snowman.view.MessagePrinter;
+import com.snowman.view.SinglePlayerView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 /**
@@ -15,28 +17,36 @@ import java.util.ResourceBundle;
 public class Main {
 
   private static final String BUNDLE_NAME = "strings";
-  private static String gameMode; //remove static when can
+  private static boolean isInitialRun = true;
 
   /**
    * @param args Command-line arguments.
    * @throws IOException Thrown if an I/O error is produced by failed or interrupted I/O
    *                     operations.
    */
-
-  public static void main(String[] args) throws IOException {
-    MessagePrinter.printWelcomeMessage();
-    ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME);
+  public static void main(String[] args) {
+    ResourceBundle stringBundle = ResourceBundle.getBundle(BUNDLE_NAME);
     WordListProcessor words = new WordListProcessor();
+    String gameModePrompt = stringBundle.getString("game_mode");
+
+    welcomeInitialRun();
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     ) {
+      label:
       do {
-        gameMode = promptGameMode(reader);
-        if (gameMode.equals("1")) {
-          new SinglePlayer(reader, words, bundle);
-        } else if (gameMode.equals("2")) {
-          multiPlayer();
-        } else if (gameMode.equals("3")) {
-          break;
+        String gameMode = promptGameMode(reader, gameModePrompt);
+        switch (gameMode) {
+          case "1":
+            Game game = new Game();
+            SinglePlayerView view = new SinglePlayerView();
+            SinglePlayer player = new SinglePlayer(game, view, words, stringBundle, reader);
+            player.play();
+            break;
+          case "2":
+            new MultiPlayer();
+            break;
+          case "q":
+            break label;
         }
       } while (true);
     } catch (IOException e) {
@@ -44,16 +54,16 @@ public class Main {
     }
   }
 
-  private static String promptGameMode(BufferedReader reader) throws IOException {
-    System.out.println("Hey there! What would you like to play?");
-    System.out.println("Enter 1 for Single-Player");
-    System.out.println("Enter 2 for Multi-Player");
-    System.out.println("Enter 3 to Exit Snowman");
-    return reader.readLine().trim();
+  private static void welcomeInitialRun() {
+    if (isInitialRun) {
+      MessagePrinter.printWelcomeMessage();
+      isInitialRun = false;
+    }
   }
 
-  static void multiPlayer() {
-    System.out.println("Sorry, the multiplayer feature is not ready yet.");
+  private static String promptGameMode(BufferedReader reader, String prompt) throws IOException {
+    System.out.println(prompt);
+    return reader.readLine().trim();
   }
 
 }
