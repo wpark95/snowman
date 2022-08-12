@@ -37,7 +37,8 @@ public class SinglePlayer {
       view.displayCurrentState();
       String guess = getUserGuess();
       if (!game.isDuplicateGuess(guess)) {
-        game.evaluateGuess(guess);
+        boolean isRightGuess = game.evaluateGuess(guess);
+        view.displayGuessResult(isRightGuess);
       }
       game.updateIsOver();
     }
@@ -51,7 +52,6 @@ public class SinglePlayer {
     int initialGuess = getGuessNumPreference(guessNumPreferencePrompt);
     String randomWord = words.wordChoice(wordLength);
     game.setInitial(initialGuess, randomWord);
-    System.out.println(randomWord + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //TODO: Displaying the secret word for demo.
   }
 
   public String getUserGuess() {

@@ -32,22 +32,24 @@ public class Game {
     return result;
   }
 
-  public void evaluateGuess(String guess) {
-    if (guess.length() > 1) { // If the guess is a word
+  public boolean evaluateGuess(String guess) {
+    boolean result = false;
+    if (guess.length() > 1) {
       if (guess.equals(secretWord)) {
         setCurrentGuessState(guess);
+        result = true;
       } else {
         setRemainingGuess(remainingGuess - 1);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOh no! I'm melting!");
       }
-    } else { // If the guess is a letter
+    } else {
       if (getSecretWord().contains(guess)) {
         setCurrentGuessState(updateGuessState(guess, getSecretWord()));
+        result = true;
       } else {
         setRemainingGuess(remainingGuess - 1);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOh no! I'm melting!");
       }
     }
+    return result;
   }
 
   private String updateGuessState(String guess, String secretWord) {
@@ -60,7 +62,6 @@ public class Game {
         char[] chars = newGuessState.toCharArray();
         chars[i] = userLetter;
         newGuessState = String.valueOf(chars);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGreat job!");
       }
     }
     return newGuessState;
