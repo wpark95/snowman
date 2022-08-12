@@ -10,7 +10,6 @@ public class SinglePlayerView {
 
   private Set<String> triedWords;
   private String currentGuessState;
-  private String snowman;
   private String secretWord;
   private int remainingGuess;
 
@@ -43,7 +42,7 @@ public class SinglePlayerView {
           + Messages.ANSI_RESET);
     } else {
       System.out.println(Messages.ANSI_RED
-          + "\n\n\nReally, Nick Bennett? You are going to let me melt like this?\n"
+          + "\n\n\nYou are not going to let me melt like this, are you?\n"
           + Messages.ANSI_RESET);
     }
   }
@@ -53,9 +52,7 @@ public class SinglePlayerView {
    * the English alphabet.
    */
   public void displayCurrentState() {
-    System.out.println(
-        "Your remaining guesses: "
-            + getRemainingGuess());
+    System.out.println("Your remaining guesses: " + getRemainingGuess());
     System.out.println("You have tried so far: " + getTriedWords());
     System.out.println("Mystery word : " + getCurrentGuessState());
     printSnowman(getRemainingGuess());
@@ -66,7 +63,7 @@ public class SinglePlayerView {
    *
    * @param remainingGuess
    */
-  public static void printSnowman(int remainingGuess) {
+  public void printSnowman(int remainingGuess) {
     switch (remainingGuess) {
       case 1:
         printHalfSnowman();
@@ -179,6 +176,10 @@ public class SinglePlayerView {
 
   public void setCurrentGuessState(String currentGuessState) {
     this.currentGuessState = currentGuessState;
+  }
+
+  public String getSecretWord() {
+    return secretWord;
   }
 
   public void setSecretWord(String secretWord) {

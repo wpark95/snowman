@@ -21,19 +21,19 @@ class SinglePlayerTest {
   @Test
   void play() {
 
+
   }
 
-  @Test
-  void getInitialSetupTest() {
-    SinglePlayer player = new SinglePlayer(game, view, words,
-        bundle, reader);
-    int actual = player.getInitialSetup();
-    int expected = 0;
-
-    assertEquals(expected, actual);
-  }
-
-  @Test
-  void getUserGuess() {
-  }
+//  @Test
+//  void getInitialSetupTest() {
+//    SinglePlayer player = new SinglePlayer(game, view, words,
+//        bundle, reader);
+//    int expected = 0;
+//
+//    assertEquals(expected, actual);
+//  }
+//
+//  @Test
+//  void getUserGuess() {
+//  }
 }
