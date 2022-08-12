@@ -4,7 +4,7 @@ import com.snowman.controller.MultiPlayer;
 import com.snowman.controller.SinglePlayer;
 import com.snowman.model.Game;
 import com.snowman.model.WordListProcessor;
-import com.snowman.view.MessagePrinter;
+import com.snowman.view.Messages;
 import com.snowman.view.SinglePlayerView;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,8 +28,8 @@ public class Main {
     ResourceBundle stringBundle = ResourceBundle.getBundle(BUNDLE_NAME);
     WordListProcessor words = new WordListProcessor();
     String gameModePrompt = stringBundle.getString("game_mode");
+    welcomeInitialRun(Messages.WELCOME_MESSAGE);
 
-    welcomeInitialRun();
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     ) {
       label:
@@ -54,9 +54,9 @@ public class Main {
     }
   }
 
-  private static void welcomeInitialRun() {
+  private static void welcomeInitialRun(String welcomeMessage) {
     if (isInitialRun) {
-      MessagePrinter.printWelcomeMessage();
+      System.out.println(welcomeMessage);
       isInitialRun = false;
     }
   }
