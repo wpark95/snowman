@@ -33,6 +33,8 @@ public class SinglePlayer {
   public void play() {
     getInitialSetup();
     while (!game.isOver()) {
+      updateView();
+      view.displayCurrentState();
       String guess = getUserGuess();
       if (!game.isDuplicateGuess(guess)) {
         game.evaluateGuess(guess);
@@ -108,6 +110,11 @@ public class SinglePlayer {
     System.out.println(prompt);
     String userInput = reader.readLine().trim();
     return Integer.parseInt(userInput);
+  }
+
+  private void updateView() {
+    view.updateCurrentState(game.getTriedWords(), game.getCurrentGuessState(),
+        game.getRemainingGuess());
   }
 
 }

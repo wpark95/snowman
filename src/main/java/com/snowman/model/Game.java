@@ -80,6 +80,10 @@ public class Game {
   }
 
   // Getter and Setter Methods
+  public Set<String> getTriedWords() {
+    return triedWords;
+  }
+
   public String getSecretWord() {
     return secretWord;
   }
