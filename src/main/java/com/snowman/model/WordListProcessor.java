@@ -38,6 +38,11 @@ public class WordListProcessor {
 
   public String wordChoice(int userLength) {
     List<String> sameLengthWords = words.get(userLength);
+    System.out.println(sameLengthWords);
+    for (String word : sameLengthWords) {     //TODO delete thios after fixing test case!
+      System.out.printf('"' + word + '"' + ", ");
+    }
+
     return sameLengthWords.get(rng.nextInt(sameLengthWords.size()));
   }
 
