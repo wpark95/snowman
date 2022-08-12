@@ -55,7 +55,6 @@ public class MessagePrinter {
       + "╚═════╝░╚═╝░░╚══╝░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝";
 
   public static void printSnowman(int remainingGuess, String secretWord) {
-
     switch (remainingGuess) {
       case 0:
         MessagePrinter.printLoseMessage(secretWord);
@@ -73,7 +72,6 @@ public class MessagePrinter {
         MessagePrinter.printHappySnowman();
         break;
     }
-
   }
 
   private static void printHappySnowman() {
@@ -106,13 +104,11 @@ public class MessagePrinter {
   }
 
   public static void printWinMessage(String secretWord) { // TODO: Fix Win and Lose Message
-    System.out.println("Congratulations! Your word was: " + secretWord);
-    System.out.println(WIN_MESSAGE);
+    System.out.println(WIN_MESSAGE + secretWord);
   }
 
   public static void printLoseMessage(String secretWord) {
-    System.out.println(LOSE_MESSAGE);
-    System.out.println("Oh no :(   Your word was: " + secretWord);
+    System.out.println(LOSE_MESSAGE + secretWord);
   }
 
   public static void printCurrentState(int remainingGuess, String wordPlaceholder,
@@ -121,7 +117,6 @@ public class MessagePrinter {
     System.out.println("You have tried so far: " + triedWords);
     System.out.println("Mystery word : " + wordPlaceholder);
   }
-
 
   public static void printWelcomeMessage () {
     System.out.println(WELCOME);
