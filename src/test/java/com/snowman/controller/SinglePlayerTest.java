@@ -14,26 +14,21 @@ class SinglePlayerTest {
 
   private final Game game = new Game();
   private final SinglePlayerView view = new SinglePlayerView();
-  private final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   private final WordListProcessor words = new WordListProcessor();
+  private final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+  private final SinglePlayer controller = new SinglePlayer(game, view, words, bundle, reader);
 
   @Test
   void play() {
-
   }
 
   @Test
   void getInitialSetupTest() {
-    SinglePlayer player = new SinglePlayer(game, view, words,
-        bundle, reader);
-    int actual = player.getInitialSetup();
-    int expected = 0;
-
-    assertEquals(expected, actual);
   }
 
   @Test
   void getUserGuess() {
   }
+
 }
