@@ -6,11 +6,10 @@ import java.util.Set;
 public class Game {
 
   private final Set<String> triedWords;
+
   private String secretWord;
   private String currentGuessState;
-
   private int remainingGuess;
-
   private boolean isOver;
 
   public Game() {
@@ -18,9 +17,9 @@ public class Game {
   }
 
   public void setInitial(int initialGuess, String randomWord) {
-    remainingGuess = initialGuess;
-    secretWord = randomWord;
-    currentGuessState = "_".repeat(randomWord.length());
+    setRemainingGuess(initialGuess);
+    setSecretWord(randomWord);
+    setCurrentGuessState("_".repeat(randomWord.length()));
   }
 
   public boolean isDuplicateGuess(String guess) {
@@ -33,25 +32,20 @@ public class Game {
     return result;
   }
 
-  public boolean evaluateGuess(String guess) {
-    boolean result = false;
-
+  public void evaluateGuess(String guess) {
     if (guess.length() > 1) { // If the guess is a word
       if (guess.equals(secretWord)) {
-        setCurrentGuessState(secretWord);
-        result = true;
+        setCurrentGuessState(guess);
       } else {
-        remainingGuess--;
+        setRemainingGuess(remainingGuess - 1);
       }
     } else { // If the guess is a letter
-      if (secretWord.contains(guess)) {
-        setCurrentGuessState(updateGuessState(guess, secretWord));
-        result = true;
+      if (getSecretWord().contains(guess)) {
+        setCurrentGuessState(updateGuessState(guess, getSecretWord()));
       } else {
-        remainingGuess--;
+        setRemainingGuess(remainingGuess - 1);
       }
     }
-    return result;
   }
 
   private String updateGuessState(String guess, String secretWord) {
@@ -70,27 +64,28 @@ public class Game {
   }
 
   public void updateIsOver() {
-    if (currentGuessState.equals(secretWord)) {
+    if (currentGuessState.equals(getSecretWord())) {
       setOver(true);
     }
-    if (remainingGuess == 0) {
+    if (getRemainingGuess() == 0) {
       setOver(true);
     }
   }
 
   public boolean hasWon() {
-    if (currentGuessState.equals(secretWord)) {
+    if (currentGuessState.equals(getSecretWord())) {
       return true;
     }
     return false;
   }
 
-  public boolean isOver() {
-    return isOver;
+  // Getter and Setter Methods
+  public String getSecretWord() {
+    return secretWord;
   }
 
-  public void setOver(boolean over) {
-    isOver = over;
+  public void setSecretWord(String secretWord) {
+    this.secretWord = secretWord;
   }
 
   public String getCurrentGuessState() {
@@ -99,6 +94,22 @@ public class Game {
 
   public void setCurrentGuessState(String currentGuessState) {
     this.currentGuessState = currentGuessState;
+  }
+
+  public int getRemainingGuess() {
+    return remainingGuess;
+  }
+
+  public void setRemainingGuess(int remainingGuess) {
+    this.remainingGuess = remainingGuess;
+  }
+
+  public boolean isOver() {
+    return isOver;
+  }
+
+  public void setOver(boolean over) {
+    isOver = over;
   }
 
 }
